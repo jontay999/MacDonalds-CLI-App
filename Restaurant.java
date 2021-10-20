@@ -28,10 +28,6 @@ public class Restaurant {
         this.location = location;
     }
 
-    //for month
-    private void generateRevenueReport(int year, int month){
-
-    }
 
     //for daily
     private void generateRevenueReport(LocalDate selectedDate){
@@ -75,7 +71,6 @@ public class Restaurant {
         printRevenueReport(alaCarteSales, promoSales);
     }
 
-
     private void printRevenueReport(Map<String, HashMap<String, Double>> alaCarteSales, Map<String, HashMap<String, Double>> promoSales){
         double alaCarteRevenue = 0;
         double promoRevenue = 0;
@@ -90,8 +85,6 @@ public class Restaurant {
         System.out.println("===============================");
         System.out.printf("Total Revenue : %.2f%n", alaCarteRevenue+promoRevenue);
     }
-
-
 
     private double printCategorySales(Map<String, HashMap<String, Double>> salesCategory){
         double totalSales = 0;
@@ -148,6 +141,8 @@ public class Restaurant {
     public boolean isOpen(LocalTime checkingTime){
         return checkingTime.isBefore(getClosingTime()) && checkingTime.isAfter(getOpeningTime());
     }
+
+
 
     public LocalTime getOpeningTime() {
         return openingTime;
