@@ -1,17 +1,18 @@
 import java.time.LocalDate;
 
-public class MenuItems extends Promotion {
+enum Category{
+    MAIN_COURSE,
+    DRINK,
+    DESSERT,
+    SIDES
+};
+
+public class MenuItem extends Promotion {
     String name;
     String description;
     int promotionId;
-    enum Category{
-        MAIN_COURSE,
-        DRINK,
-        DESSERT,
-        SIDES
-    };
     Category category;
-    public MenuItems(float originalPrice, float discountedPrice, LocalDate startDate, LocalDate endDate, String name, String description, int promotionId, Category category) {
+    public MenuItem(double originalPrice, double discountedPrice, LocalDate startDate, LocalDate endDate, String name, String description, int promotionId, Category category) {
         super(originalPrice, discountedPrice, startDate, endDate);
         this.name = name;
         this.description = description;

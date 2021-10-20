@@ -3,10 +3,20 @@ import java.util.ArrayList;
 
 public class PromotionalSet extends Promotion {
     int promotionId;
-    List<MenuItems> menuItems = new ArrayList<MenuItems>();
-    public PromotionalSet(float originalPrice, float discountedPrice, LocalDate startDate, LocalDate endDate, int promotionId) {
+    String name;
+    ArrayList<MenuItem> menuItems = new ArrayList<MenuItem>();
+    public PromotionalSet(String name, double originalPrice, double discountedPrice, LocalDate startDate, LocalDate endDate, int promotionId) {
         super(originalPrice, discountedPrice, startDate, endDate);
         this.promotionId=promotionId;
+        this.name=name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setName(String name){
+        this.name=name;
     }
 
     public int getPromotionId() {
@@ -17,13 +27,28 @@ public class PromotionalSet extends Promotion {
         this.promotionId = promotionId;
     }
 
-    public MenuItems[] getMenuItems() {
+    public ArrayList<MenuItem> getMenuItems() {
         return this.menuItems;
     }
 
-    public void addMenuItems(MenuItems[] newItem) {
+    public void setMenuItems(ArrayList<MenuItem> menuItems){
+        this.menuItems=menuItems;
+    }
+
+    public void addMenuItem(MenuItem newItem) {
         menuItems.add(newItem);
     }
 
-    
+    public void removeMenuItem(int index) {
+        if(index>=menuItems.size())System.out.println("Item not found! Please try again");
+        else menuItems.remove(index);
+    }
+
+    public ArrayList<String> getItemNames(){
+        ArrayList<String> names = new ArrayList<String>();
+        for(MenuItem item:menuItems){
+            names.add(item.getName());
+        }
+        return names;
+    }
 }

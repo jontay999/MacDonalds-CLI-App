@@ -1,18 +1,18 @@
 import java.time.LocalDate;
 
 public class Promotion {
-    float originalPrice;
-    float discountedPrice;
+    double originalPrice;
+    double discountedPrice;
     LocalDate startDate;
     LocalDate endDate;
 
-    public Promotion(float originalPrice, float discountedPrice, LocalDate startDate, LocalDate endDate){
+    public Promotion(double originalPrice, double discountedPrice, LocalDate startDate, LocalDate endDate){
         this.originalPrice=originalPrice;
         this.discountedPrice=discountedPrice;
         this.startDate=startDate;
         this.endDate=endDate;
     }
-    public float getDiscount(){
+    public double getDiscount(){
         return(((originalPrice-discountedPrice)/originalPrice)*100);
     }
     public boolean isAvailable(){
@@ -20,19 +20,19 @@ public class Promotion {
         return(curDate.isAfter(startDate)&&curDate.isBefore(endDate));
     }
 
-    public float getOriginalPrice() {
+    public double getOriginalPrice() {
         return this.originalPrice;
     }
 
-    public void setOriginalPrice(float originalPrice) {
+    public void setOriginalPrice(double originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public float getDiscountedPrice() {
+    public double getDiscountedPrice() {
         return this.discountedPrice;
     }
 
-    public void setDiscountedPrice(float discountedPrice) {
+    public void setDiscountedPrice(double discountedPrice) {
         this.discountedPrice = discountedPrice;
     }
 
