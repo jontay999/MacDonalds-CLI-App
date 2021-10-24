@@ -69,12 +69,25 @@ public class Menu {
         setLastUpdated(LocalDateTime.now());
     }
 
+    public int getMaxItemLength(){
+        int maxItemLength = 0;
+        for(MenuItem item:menuItems){
+            if (item.getName().length() > maxItemLength) maxItemLength= item.getName().length();
+        }
+        return maxItemLength;
+    }
+
+
     public void printMenuByCat(Category category){
         int count=0;
+        // int maxItemLength = 0;
+        // for(MenuItem item:menuItems){
+        //     if (item.getName().length() > maxItemLength) maxItemLength= item.getName().length();
+        // }
         for(MenuItem item:menuItems){
             if (item.getCategory() == category){
                 System.out.print(item.getName());
-                for(int i=0;i<20-item.getName().length();i++)System.out.print(" ");
+                for(int i=0;i<getMaxItemLength()-item.getName().length()+5;i++)System.out.print(" ");
                 System.out.printf(" - $%.2f",item.getDiscountedPrice());
                 for(int i=0;i<5;i++)System.out.print(" ");
                 // System.out.print(item.getName()+" - $"+item.getDiscountedPrice());
@@ -88,14 +101,14 @@ public class Menu {
 
 
     public void printMenu(){
-        for(int i=0;i<70;i++)System.out.print("-");
+        for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("");
-        for(int i=0;i<20;i++)System.out.print(" ");
+        for(int i=0;i<getMaxItemLength()+5;i++)System.out.print(" ");
         System.out.println("MacDonalds " +name+" menu ");
-        for(int i=0;i<70;i++)System.out.print("-");
+        for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         System.out.println("\nAla-Carte Items:");
-        for(int i=0;i<70;i++)System.out.print("-");
+        for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("\nMain Course: ");
         for(int i=0;i<12;i++)System.out.print("-");
         System.out.println("");
@@ -113,7 +126,7 @@ public class Menu {
         System.out.println("");
         printMenuByCat(Category.DESSERT);
         System.out.println("\nPromotional Sets:");
-        for(int i=0;i<70;i++)System.out.print("-");
+        for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         for(PromotionalSet item:promoSets){
             System.out.print(item.getName());
