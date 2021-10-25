@@ -43,13 +43,8 @@ public class Table {
         isOccupied = occupied;
     }
 
-<<<<<<< HEAD
     public MacDonalds.Reservation setReservation(LocalDateTime reservationTiming, int reservationID, LocalDateTime createdAt, int numPax, String customerName, String restaurantName, String status) {
-        return new MacDonalds.Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
-=======
-    public void setReservation(LocalDateTime reservationTiming, int reservationID, LocalDateTime createdAt, int numPax, String customerName, String restaurantName, String status) {
-        this.reservation = new Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
->>>>>>> 942864050469195434133c3516a1228a002de627
+        return new MacDonalds.Reservation(reservationTiming, reservationID, createdAt, numPax, customerName, restaurantName, status);
     }
 
     public void setReserved(boolean reserved) {
