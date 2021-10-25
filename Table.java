@@ -44,7 +44,7 @@ public class Table {
     }
 
     public MacDonalds.Reservation setReservation(LocalDateTime reservationTiming, int reservationID, LocalDateTime createdAt, int numPax, String customerName, String restaurantName, String status) {
-        this.reservation = new MacDonalds.Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
+        return new MacDonalds.Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
     }
 
     public void setReserved(boolean reserved) {
