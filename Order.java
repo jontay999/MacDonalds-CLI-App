@@ -79,8 +79,9 @@ public class Order {
     }
 
     public void getOrderInvoice(){
-        System.out.println("Your Receipt: ");
-        for (int i=0;i<10;i++) System.out.print("===");
+        System.out.println("\n\nYour Receipt: ");
+        for (int i=0;i<10;i++) System.out.print("=====");
+        System.out.print("\n");
         double totalCost = 0;
 
         // menu items
@@ -95,10 +96,14 @@ public class Order {
             System.out.printf("Net: $%.2f\n", net);
             System.out.printf("Taxes: $%.2f\n", taxes);
             System.out.printf("Total: $%.2f\n", total);
+            System.out.print("\n");
+
         }
 
-        System.out.println("Promo Items");
-        for (int i=0;i<10;i++) System.out.print("---");
+        System.out.println("\nPromo Items");
+        for (int i=0;i<10;i++) System.out.print("-----");
+        System.out.print("\n");
+
         Set<PromotionalSet> uniquePromoOrders = new LinkedHashSet<PromotionalSet>(allPromoSets);
         for (PromotionalSet s:uniquePromoOrders){
             double net = totalCount(s.getName())*s.discountedPrice;
@@ -110,8 +115,11 @@ public class Order {
             System.out.printf("Net: $%.2f\n", net);
             System.out.printf("Taxes: $%.2f\n", taxes);
             System.out.printf("Total: $%.2f\n", total);
+            System.out.print("\n");
+
         }
-        for (int i=0;i<10;i++) System.out.print("===");
+        for (int i=0;i<10;i++) System.out.print("=====");
+        System.out.print("\n");
         System.out.printf("Total Cost: $%.2f\n", totalCost);
 
     }

@@ -1,5 +1,7 @@
 package MacDonalds;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class MacDonaldsApp {
 
@@ -33,6 +35,26 @@ public class MacDonaldsApp {
         menu.addItem(promo1);
         // menu.addItem(item6);
         menu.printMenu();
-        }
+
+        ArrayList<MenuItem> menuItems = new ArrayList<MenuItem>();
+        menuItems.add(item1);
+        menuItems.add(item2);
+        menuItems.add(item3);
+        menuItems.add(item4);
+        menuItems.add(item5);
+        menuItems.add(item6);
+
+        ArrayList<PromotionalSet> promoItems = new ArrayList<PromotionalSet>();
+        promoItems.add(promo1);
+
+        Membership repStudent = new Membership("REP Student", 10);
+
+        Customer Jimmy = new Customer("Jimmy", repStudent);
+
+        Order newOrder = new Order(LocalDateTime.now(), 1, 12, 1001, Jimmy, menuItems, promoItems);
+        newOrder.getOrderInvoice();
+
+
+    }
     }
 
