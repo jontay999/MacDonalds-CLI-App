@@ -6,7 +6,7 @@ public class Table {
     private int size;
     private boolean isOccupied;
     private boolean isReserved;
-    private MacDonalds.Reservation reservation;
+    private Reservation reservation;
 
     Table(){
         size=0;
@@ -17,7 +17,7 @@ public class Table {
         this.size = size;
     }
 
-    public MacDonalds.Reservation getReservation() {
+    public Reservation getReservation() {
         return this.reservation;
     }
 
@@ -43,8 +43,8 @@ public class Table {
         isOccupied = occupied;
     }
 
-    public MacDonalds.Reservation setReservation(LocalDateTime reservationTiming, int reservationID, LocalDateTime createdAt, int numPax, String customerName, String restaurantName, String status) {
-        this.reservation = new MacDonalds.Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
+    public void setReservation(LocalDateTime reservationTiming, int reservationID, LocalDateTime createdAt, int numPax, String customerName, String restaurantName, String status) {
+        this.reservation = new Reservation(reservationTiming,reservationID,createdAt, numPax, customerName, restaurantName, status);
     }
 
     public void setReserved(boolean reserved) {
