@@ -24,3 +24,5 @@ hs_err_pid*
 
 #stupid mac file
 .DS_Store
+.idea
+*.iml

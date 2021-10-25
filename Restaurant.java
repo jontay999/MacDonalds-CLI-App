@@ -28,10 +28,6 @@ public class Restaurant {
         this.location = location;
     }
 
-    //for month
-    private void generateRevenueReport(int year, int month){
-
-    }
 
     //for daily
     private void generateRevenueReport(LocalDate selectedDate){

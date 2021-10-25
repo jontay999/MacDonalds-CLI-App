@@ -1,3 +1,5 @@
+package MacDonalds;
+
 import java.time.LocalDate;
 
 public class Promotion {
