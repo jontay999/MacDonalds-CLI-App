@@ -1,4 +1,5 @@
 package MacDonalds;
+
 import java.time.LocalDateTime;
 
 public class Reservation {
@@ -36,7 +37,7 @@ public class Reservation {
     }
 
     public LocalDateTime getReservationTime() {
-        return reservationTime;
+        return reservationTiming;
     }
 
     public String getCustomerName() {
@@ -68,7 +69,7 @@ public class Reservation {
     }
 
     public void setReservationTime(LocalDateTime reservationTime) {
-        this.reservationTime = reservationTime;
+        this.reservationTiming = reservationTime;
     }
 
     public void setRestaurantName(String restaurantName) {
