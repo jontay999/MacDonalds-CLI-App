@@ -88,7 +88,7 @@ public class Menu {
         for(MenuItem item:menuItems){
             if (item.getCategory() == category){
                 System.out.print(item.getName());
-                for(int i=0;i<getMaxItemLength()-item.getName().length()+5;i++)System.out.print(" ");
+                for(int i=0;i<getMaxItemLength()-item.getName().length()+2;i++)System.out.print(" ");
                 System.out.printf(" - $%.2f",item.getDiscountedPrice());
                 for(int i=0;i<5;i++)System.out.print(" ");
                 // System.out.print(item.getName()+" - $"+item.getDiscountedPrice());

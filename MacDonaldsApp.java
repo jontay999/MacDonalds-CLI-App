@@ -1,60 +1,97 @@
 package MacDonalds;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class MacDonaldsApp {
-
+    static ArrayList<Menu> menuList=new ArrayList<Menu>();
     public static void main(String[] args){
+        initMenuData();
         System.out.println("Hello! Welcome to MacDonalds");
-        Menu menu = new Menu("Lunch");
-        LocalDate now = LocalDate.now();
-        MenuItem item1 = new MenuItem(5.00, 5.00, now, now, "Burger", "this is a burger", 12345, Category.MAIN_COURSE);
-        MenuItem item2 = new MenuItem(5.00, 3.00, now, now, "Fries", "this is a fries", 12345, Category.SIDES);
-        MenuItem item3 = new MenuItem(5.00, 1.00, now, now, "Coke", "this is a drink", 12345, Category.DRINK);
-        MenuItem item4 = new MenuItem(5.00, 1.50, now, now, "McDouble Vegetarian", "this is a drink", 12345, Category.MAIN_COURSE);
-        MenuItem item5 = new MenuItem(5.00, 2.70, now, now, "McChicken", "this is a drink", 12345, Category.SIDES);
-        MenuItem item6 = new MenuItem(5.00, 1.00, now, now, "McDouble Spicy", "this is a drink", 12345, Category.SIDES);
-        PromotionalSet promo1 = new PromotionalSet("McVeggie Meal", 5.00, 5.00, now, now, 123456);
-        promo1.addMenuItem(item1);
-        promo1.addMenuItem(item2);
-        menu.addItem(item1);
-        menu.addItem(item2);
-        menu.addItem(item3);
-        menu.addItem(item4);
-        menu.addItem(item5);
-        menu.addItem(item6);
-        menu.addItem(item6);
-        menu.addItem(item6);
-        menu.addItem(item6);
-        menu.addItem(item6);
-        menu.addItem(promo1);
-        menu.addItem(promo1);
-        menu.addItem(promo1);
-        menu.addItem(promo1);
-        menu.addItem(promo1);
-        // menu.addItem(item6);
-        menu.printMenu();
+        String[]options={"Menu","Quit"};
+        int selection=0;
+        while(selection!=options.length){
+            selection = getUserInput("OPTIONS", options);
+            if(selection==1)MenuSelection();
+        }
+    }
 
-        ArrayList<MenuItem> menuItems = new ArrayList<MenuItem>();
-        menuItems.add(item1);
-        menuItems.add(item2);
-        menuItems.add(item3);
-        menuItems.add(item4);
-        menuItems.add(item5);
-        menuItems.add(item6);
+    public static void initMenuData(){
+        JSONParser parser = new JSONParser();
+        try{
+            Object obj = parser.parse(new FileReader("MacDonalds/data.json"));
+            JSONObject jsonObject = (JSONObject)obj;
+            Set<?> menuNames = jsonObject.keySet();
+            for(Object name:menuNames){
+                Menu tempMenu = new Menu(name.toString());
+                JSONArray array = (JSONArray)jsonObject.get(name);
+                for(Object x:array){
+                    LocalDate now = LocalDate.now();
+                    double price = Double.parseDouble(((JSONObject)x).get("price").toString().substring(2));
+                    String itemName = ((JSONObject)x).get("name").toString().strip();
+                    String description = ((JSONObject)x).get("description").toString().strip();
+                    MenuItem tempItem = new MenuItem(price, price, now, now, itemName, description, 123, Category.MAIN_COURSE);
+                    tempMenu.addItem(tempItem);
+                }
+                menuList.add(tempMenu);
+            }
+        }
+        catch(FileNotFoundException e){e.printStackTrace();}
+        catch(IOException e){e.printStackTrace();}
+        catch(ParseException e){e.printStackTrace();}
+        catch(Exception e){e.printStackTrace();}
+    }
 
-        ArrayList<PromotionalSet> promoItems = new ArrayList<PromotionalSet>();
-        promoItems.add(promo1);
+    public static void MenuSelection(){
+        String[] options = {"Choose Menu","Create Menu"};
+        int selection = getUserInput("MENU OPTIONS", options);
+        if(selection==1)pickMenu();
+        else if(selection==2)System.out.println("CREATE NEW MENU");
+    }
 
-        Membership repStudent = new Membership("REP Student", 10);
+    public static void pickMenu(){
+        String[] options=new String[menuList.size()];
+        int count=0;
+        for(Menu menu:menuList){
+            options[count]=menu.getName();
+            count++;
+        }
+        int chosenMenuNum = getUserInput("AVAILABLE MENUS", options);
+        Menu chosenMenu = menuList.get(chosenMenuNum-1);
+        String chosenMenuName = chosenMenu.getName();
 
-        Customer Jimmy = new Customer("Jimmy", repStudent);
+        String[] options2 = {"Display Menu","Edit Menu"};
+        int selection2 = getUserInput(chosenMenuName.toUpperCase()+" OPTIONS", options2);
+        if(selection2==1)chosenMenu.printMenu();
+    }
 
-        Order newOrder = new Order(LocalDateTime.now(), 1, 12, 1001, Jimmy, menuItems, promoItems);
-        newOrder.getOrderInvoice();
-
-
+    public static int getUserInput(String title, String []options){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n"+title);
+        int count=0;
+        for(String opt:options){
+            count++;
+            System.out.println(count+"."+opt);
+        }
+        while(true){
+            System.out.print("\nEnter your selection: ");
+            int selection = scanner.nextInt();
+            if(selection<=count){
+                return selection;
+            }
+            else{
+                System.out.println("Invalid selection! Please try again.");
+            }
+        }
     }
     }
 
