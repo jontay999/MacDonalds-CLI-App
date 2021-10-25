@@ -31,16 +31,16 @@ public class Restaurant {
 
     //for daily
     private void generateRevenueReport(LocalDate selectedDate){
-        Map<String, HashMap<String, Double>> alaCarteSales = new  HashMap<String, HashMap<String, Double>>();
-        Map<String, HashMap<String, Double>> promoSales =  new  HashMap<String, HashMap<String, Double>>();
+        HashMap<Category, HashMap<String, Double>> alaCarteSales = new  HashMap<>();
+        HashMap<Category, HashMap<String, Double>> promoSales =  new  HashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         for(int i=0;i<allOrders.length;i++){
             if(allOrders[i].dateTime.toLocalDate().equals(selectedDate)){
-                for(int j = 0;j<allOrders[i].allMenuItems.length;j++){
-                    updateHashMap(allOrders[i].allMenuItems[j], alaCarteSales);
+                for(int j = 0;j<allOrders[i].allMenuItems.size();j++){
+                    updateHashMap(allOrders[i].allMenuItems.get(j), alaCarteSales);
                 }
-                for(int j = 0;j<allOrders[i].allPromoSets.length;j++){
-                    updateHashMap(allOrders[i].allPromoSets[j], promoSales);
+                for(int j = 0;j<allOrders[i].allPromoSets.size();j++){
+//                    updateHashMap(allOrders[i].allPromoSets.get(j), promoSales);
                 }
             }
         }
@@ -52,16 +52,16 @@ public class Restaurant {
 
     //for monthly
     private void generateRevenueReport(int year, int month){
-        Map<String, HashMap<String, Double>> alaCarteSales = new  HashMap<String, HashMap<String, Double>>();
-        Map<String, HashMap<String, Double>> promoSales =  new  HashMap<String, HashMap<String, Double>>();
+        HashMap<Category, HashMap<String, Double>> alaCarteSales = new  HashMap<Category, HashMap<String, Double>>();
+        HashMap<Category, HashMap<String, Double>> promoSales =  new  HashMap<Category, HashMap<String, Double>>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL yyyy");
         for(int i=0;i<allOrders.length;i++){
             if(allOrders[i].dateTime.getMonthValue() == month && allOrders[i].dateTime.getYear() == year){
-                for(int j = 0;j<allOrders[i].allMenuItems.length;j++){
-                    updateHashMap(allOrders[i].allMenuItems[j], alaCarteSales);
+                for(int j = 0;j<allOrders[i].allMenuItems.size();j++){
+                    updateHashMap(allOrders[i].allMenuItems.get(j), alaCarteSales);
                 }
-                for(int j = 0;j<allOrders[i].allPromoSets.length;j++){
-                    updateHashMap(allOrders[i].allPromoSets[j], promoSales);
+                for(int j = 0;j<allOrders[i].allPromoSets.size();j++){
+//                    updateHashMap(allOrders[i].allPromoSets.get(j), promoSales);
                 }
             }
         }
@@ -72,7 +72,7 @@ public class Restaurant {
     }
 
 
-    private void printRevenueReport(Map<String, HashMap<String, Double>> alaCarteSales, Map<String, HashMap<String, Double>> promoSales){
+    private void printRevenueReport(Map<Category, HashMap<String, Double>> alaCarteSales, Map<Category, HashMap<String, Double>> promoSales){
         double alaCarteRevenue = 0;
         double promoRevenue = 0;
         System.out.println("Ala Carte Sales");
@@ -89,11 +89,11 @@ public class Restaurant {
 
 
 
-    private double printCategorySales(Map<String, HashMap<String, Double>> salesCategory){
+    private double printCategorySales(Map<Category, HashMap<String, Double>> salesCategory){
         double totalSales = 0;
         System.out.println("-------------------------------");
-        for (Map.Entry<String, HashMap<String, Double>> entry : salesCategory.entrySet()) {
-            String category = entry.getKey();
+        for (Map.Entry<Category, HashMap<String, Double>> entry : salesCategory.entrySet()) {
+            Category category = entry.getKey();
             HashMap<String, Double> categoryMap = entry.getValue();
             System.out.println("  " + category + ":");
             for(Map.Entry<String, Double> item: categoryMap.entrySet()){
@@ -104,10 +104,10 @@ public class Restaurant {
         return totalSales;
     }
 
-    private void updateHashMap(MenuItem currItem,  HashMap<String, HashMap<String, Double>> salesCategory){
-        String category = currItem.getCategory();
+    private void updateHashMap(MenuItem currItem,  HashMap<Category, HashMap<String, Double>> salesCategory){
+        Category category = currItem.getCategory();
         String itemName = currItem.getName();
-        double itemPrice = currItem.getPrice();
+        double itemPrice = currItem.getDiscountedPrice();
 
         //if category doesn't exist yet, create category
         if(!salesCategory.containsKey(category)){
@@ -123,7 +123,7 @@ public class Restaurant {
     public ArrayList<LocalTime> getAvailableTime(LocalDate reservationDate, int pax){
         ArrayList<LocalTime> availableTimes = generateAllPossibleTimes();
         for(int i = 0;i<allReservations.length;i++){
-            LocalDateTime reservationDateTime = allReservations[i].reservationTime;
+            LocalDateTime reservationDateTime = allReservations[i].getReservationTime();
             if(reservationDateTime.toLocalDate().equals(reservationDate)){
                 availableTimes.remove(reservationDateTime.toLocalTime());
             }
