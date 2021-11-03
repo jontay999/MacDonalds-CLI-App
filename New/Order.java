@@ -1,12 +1,15 @@
 package MacDonalds.New;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Order implements OrderManager {
     Customer customer;
     Staff staff;
     LocalDateTime dateTime;
     int tableId;
+    ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
+    ArrayList<Set> setList = new ArrayList<Set>();
 
     public Customer getCustomer() {
         return this.customer;
