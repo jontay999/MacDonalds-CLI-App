@@ -1,5 +1,5 @@
 package MacDonalds.New;
 
-public class Alacarte {
+public class Alacarte extends MenuItem {
     
 }

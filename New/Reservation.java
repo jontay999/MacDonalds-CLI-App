@@ -3,27 +3,19 @@ package MacDonalds.New;
 import java.time.LocalDateTime;
 
 public class Reservation {
-    long reservationId;
     int customerContact;
     String customerName;
-    LocalDateTime reservationTime;
+    LocalDateTime reservationDateTime;
+    int numberOfPax;
 
-    Reservation(long reservationId, int customerContact, String customerName, LocalDateTime reservationTime){
-        this.reservationId = reservationId;
+    Reservation( int customerContact, String customerName, LocalDateTime reservationDateTime, int numberOfPax){
         this.customerContact = customerContact;
         this.customerName = customerName;
-        this.reservationTime = reservationTime;
+        this.reservationDateTime = reservationDateTime;
+        this.numberOfPax = numberOfPax;
     }
 
 
-
-    public long getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(long reservationId) {
-        this.reservationId = reservationId;
-    }
 
     public int getCustomerContact() {
         return customerContact;
@@ -41,15 +33,22 @@ public class Reservation {
         this.customerName = customerName;
     }
 
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
+
+    public LocalDateTime getReservationDateTime() {
+        return reservationDateTime;
     }
 
-    public void setReservationTime(LocalDateTime reservationTime) {
-        this.reservationTime = reservationTime;
+    public void setReservationDateTime(LocalDateTime reservationDateTime) {
+        this.reservationDateTime = reservationDateTime;
     }
 
+    public int getNumberOfPax() {
+        return numberOfPax;
+    }
 
+    public void setNumberOfPax(int numberOfPax) {
+        this.numberOfPax = numberOfPax;
+    }
 
 
 }

@@ -1,35 +1,40 @@
 package MacDonalds.New;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+
 public class Restaurant {
-    Table[] tables;
+    ArrayList<Table> allTables;
+    ArrayList<Staff> allStaff;
+    ArrayList<Order> allOrders;
+    LocalTime openingTime;
+    LocalTime closingTime;
     String restaurantName;
     String location;
 
-    public Table[] getTables() {
-        return tables;
-    }
-
-    public void setTables(Table[] tables) {
-        this.tables = tables;
-    }
-
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
+    Restaurant(String restaurantName, String location, LocalTime openingTime, LocalTime closingTime){
         this.restaurantName = restaurantName;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
         this.location = location;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+        this.allTables = new ArrayList<>();
+        this.allStaff = new ArrayList<>();
+        this.allOrders = new ArrayList<>();
+    }
+
+    public void addTable(int capacity){
+        Table newTable = new Table(allTables.size()+1, capacity);
+        allTables.add(newTable);
     }
 
 
-//    Staff[] staff;
+
+    //wait for dhruval
+//    public void addStaff(String name, JobTitle title, Gender gender){
+//        Staff newStaff = new Staff(name, title, gender);
+//    }
+
+
+
 
 }
