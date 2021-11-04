@@ -2,12 +2,14 @@ package MacDonalds.New;
 
 public class Customer extends Person {
     Order order;
+    int contact;
     // Membership membership;
 
     Customer(){
         //
     }
 
+    public int getContact(){return this.contact;}
     public String getName(){
         return this.name;
     }

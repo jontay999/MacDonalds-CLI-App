@@ -7,6 +7,10 @@ public class Staff extends Person {
     Gender gender;
     JobTitle jobTitle;
 
+    Staff(String name, Gender gender, JobTitle jobTitle){
+        //dhruval can continue here
+    }
+
     public String getName(){
         return this.name;
     }

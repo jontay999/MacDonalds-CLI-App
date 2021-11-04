@@ -11,6 +11,7 @@ public class MonthlyRevenueReport extends RevenueReport {
         this.year = year;
         findOrders(allOrders, month, year);
         calculateRevenue();
+        populateDictionary();
     }
 
     public void findOrders(ArrayList<Order> allOrders, Month month, int year){

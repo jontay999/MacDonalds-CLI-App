@@ -9,6 +9,7 @@ public class DailyRevenueReport extends RevenueReport{
         this.date = date;
         findOrders(allOrders, date);
         calculateRevenue();
+        populateDictionary();
     }
 
     public void findOrders(ArrayList<Order> allOrders, LocalDate date){
@@ -18,4 +19,5 @@ public class DailyRevenueReport extends RevenueReport{
             }
         }
     }
+
 }

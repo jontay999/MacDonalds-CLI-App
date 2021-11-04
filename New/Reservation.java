@@ -3,36 +3,19 @@ package MacDonalds.New;
 import java.time.LocalDateTime;
 
 public class Reservation {
-    int customerContact;
-    String customerName;
     LocalDateTime reservationDateTime;
+    Customer customer;
     int numberOfPax;
 
-    Reservation( int customerContact, String customerName, LocalDateTime reservationDateTime, int numberOfPax){
-        this.customerContact = customerContact;
-        this.customerName = customerName;
+    Reservation( Customer customer, LocalDateTime reservationDateTime, int numberOfPax){
+        this.customer = customer;
         this.reservationDateTime = reservationDateTime;
         this.numberOfPax = numberOfPax;
     }
 
-
-
-    public int getCustomerContact() {
-        return customerContact;
+    public Customer getCustomer(){
+        return this.customer;
     }
-
-    public void setCustomerContact(int customerContact) {
-        this.customerContact = customerContact;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
 
     public LocalDateTime getReservationDateTime() {
         return reservationDateTime;

@@ -10,47 +10,46 @@ public class Table implements MakeReservation {
     int capacity;
     ArrayList<LocalDateTime> timingsAvailable;
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-    boolean isOccupied;
+    Customer occupyingCustomer;
 
     Table(int tableNumber, int capacity){
         this.reservations = new ArrayList<>();
         this.tableNumber = tableNumber;
         this.capacity = capacity;
         this.timingsAvailable = new ArrayList<>();
-        this.isOccupied = false;
+        this.occupyingCustomer = null;
     }
 
-    public void makeReservation(int contact, String name, LocalDateTime timing, int numberOfPax){
+    public void makeReservation(Customer customer, LocalDateTime timing, int numberOfPax){
         clearOldReservations();
-        Reservation newReservation = new Reservation(contact, name, timing, numberOfPax);
+        Reservation newReservation = new Reservation(customer, timing, numberOfPax);
         this.reservations.add(newReservation);
-        System.out.println("Reservation for " + numberOfPax + " at " + timing.format(formatter) + "made by " + name + " at Table " + getTableNumber() +  ".");
+        System.out.println("Reservation for " + numberOfPax + " at " + timing.format(formatter) + "made by " + customer.getName() + " at Table " + getTableNumber() +  ".");
     };
 
     public void removeReservation(int contact, LocalDateTime timing){
         clearOldReservations();
-        this.reservations.removeIf(r -> r.getCustomerContact() == contact && r.getReservationDateTime() == timing);
+        this.reservations.removeIf(r -> r.getCustomer().getContact() == contact && r.getReservationDateTime() == timing);
     }
 
-    public boolean checkReservation(int contact, LocalDateTime timing){
+    public Reservation checkReservation(int contact, LocalDateTime timing){
         clearOldReservations();
         for(Reservation r: reservations){
-            if(r.getCustomerContact() == contact && r.getReservationDateTime() == timing){
-                return true;
+            if(r.getCustomer().getContact() == contact && r.getReservationDateTime() == timing){
+                return r;
             }
         }
-        return false;
+        return null;
     };
 
     public void printReservationConfirmation(int contact, LocalDateTime timing){
         clearOldReservations();
         for(Reservation r: reservations){
-            if(r.getCustomerContact() == contact && r.getReservationDateTime() == timing){
+            if(r.getCustomer().getContact() == contact && r.getReservationDateTime() == timing){
                 System.out.println("Reservation Details:");
                 System.out.println("======================");
-                System.out.println("Customer name: " + r.getCustomerName());
-                System.out.println("Customer contact: " +r.getCustomerContact());
+                System.out.println("Customer name: " + r.getCustomer().getName());
+                System.out.println("Customer contact: " +r.getCustomer().getContact());
                 System.out.println("Number of Pax" + r.getNumberOfPax());
                 System.out.println("Reservation Timing: " + r.getReservationDateTime());
                 return;
@@ -62,6 +61,11 @@ public class Table implements MakeReservation {
     public void clearOldReservations(){
         LocalDateTime timeExpiry = LocalDateTime.now().minusHours(1);
         this.reservations.removeIf(r -> r.getReservationDateTime().isBefore(timeExpiry));
+    }
+
+    public ArrayList<Reservation> getReservations(){
+        clearOldReservations();
+        return this.reservations;
     }
 
     public int getTableNumber() {
@@ -80,12 +84,12 @@ public class Table implements MakeReservation {
         this.capacity = capacity;
     }
 
-    public boolean isOccupied() {
-        return isOccupied;
+    public Customer getOccupyingCustomer() {
+        return this.occupyingCustomer;
     }
 
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
+    public void setOccupyingCustomer(Customer customer) {
+        this.occupyingCustomer = customer;
     }
 
 
