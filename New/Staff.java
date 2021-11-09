@@ -4,24 +4,13 @@ enum Gender {MALE, FEMALE};
 enum JobTitle {EMPLOYEE, MANAGER}
 
 public class Staff extends Person {
-    Gender gender;
-    JobTitle jobTitle;
+    private Gender gender;
+    private JobTitle jobTitle;
 
     Staff(String name, Gender gender, JobTitle jobTitle){
-        //dhruval can continue here
-    }
-
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String n){
-        this.name = n;
-    }
-    public int getId(){
-        return this.id;
-    }
-    public void setId(int i){
-        this.id=i;
+        this.name=name;
+        this.gender=gender;
+        this.jobTitle=jobTitle;
     }
 
     public Gender getGender() {

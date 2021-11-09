@@ -1,26 +1,38 @@
 package MacDonalds.New;
 
 public class Customer extends Person {
-    Order order;
-    int contact;
-    // Membership membership;
+    private Order order;
+    private int contact;
+    Membership membership;
 
-    Customer(){
-        //
+    Customer(String name, int contact){
+        this.name=name;
+        this.contact=contact;
     }
 
-    public int getContact(){return this.contact;}
-    public String getName(){
-        return this.name;
+    public Order getOrder() {
+        return this.order;
     }
-    public void setName(String n){
-        this.name = n;
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
-    public int getId(){
-        return this.id;
+
+    public int getContact() {
+        return this.contact;
     }
-    public void setId(int i){
-        this.id=i;
+
+    public void setContact(int contact) {
+        this.contact = contact;
     }
-    
+
+    public Membership getMembership() {
+        return this.membership;
+    }
+
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
+
+
 }

@@ -10,6 +10,14 @@ public class Order implements OrderManager {
     int tableId;
     ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
     ArrayList<Set> setList = new ArrayList<Set>();
+    float totalPrice=0;
+
+    Order(Customer customer, Staff staff, LocalDateTime dateTime, int tableId){
+        this.customer=customer;
+        this.staff=staff;
+        this.dateTime=dateTime;
+        this.tableId=tableId;
+    }
 
     public Customer getCustomer() {
         return this.customer;
@@ -44,28 +52,41 @@ public class Order implements OrderManager {
     }
 
     public void addItem(Set item) {
-        // TODO Auto-generated method stub
-        
+        this.setList.add(item);
+        this.totalPrice+=item.getPrice();
     }
 
     public void addItem(Alacarte item) {
-        // TODO Auto-generated method stub
-        
+        this.alacarteList.add(item);
+        this.totalPrice+=item.getPrice();
     }
 
-    public void removeItem() {
-        // TODO Auto-generated method stub
-        
+    public void removeItem(int index, boolean isSet) {
+        if(isSet){
+            Set toRemoveItem = setList.get(index);
+            this.totalPrice-=toRemoveItem.getPrice();
+            setList.remove(index);
+        }
+        else{
+            Alacarte toRemoveItem = alacarteList.get(index);
+            this.totalPrice-=toRemoveItem.getPrice();
+            alacarteList.remove(index);}
     }
 
     public void viewOrder() {
-        // TODO Auto-generated method stub
-        
+        for(Alacarte item:alacarteList){
+            System.out.println("Alacarte item is: "+item.getName()+":S$ "+item.getPrice());
+        }
+        for(Set set:setList){
+            set.printSet();
+        }
     }
 
     public void printOrderInvoice() {
-        // TODO Auto-generated method stub
-        
+        System.out.println("This order is for table: "+this.tableId);
+        System.out.println("Order details are as follows:");
+        this.viewOrder();
+        System.out.println("Total price: "+this.totalPrice);
     }
     
 }

@@ -1,7 +1,12 @@
 package MacDonalds.New;
 
 public class PromoSet extends Set implements Promotion {
-    float finalPrice;
+    private float finalPrice;
+
+    PromoSet(String name, String description, float finalPrice) {
+        super(name, description);
+        this.finalPrice=finalPrice;
+    }
 
     public float getFinalPrice() {
         return this.finalPrice;
@@ -11,8 +16,9 @@ public class PromoSet extends Set implements Promotion {
         this.finalPrice = finalPrice;
     }
 
-    public int getDiscount() {
-        return 0;
+    public float getDiscount() {
+        float initialPrice=this.getPrice();
+        return (initialPrice-this.finalPrice)/initialPrice;
     }
 
 }
