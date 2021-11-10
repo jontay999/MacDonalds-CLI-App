@@ -1,14 +1,15 @@
 package MacDonalds.New;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class RevenueReport {
     int salesVolume;
     double revenue;
-    ArrayList<Order> orders;
-    Map<MenuItem, Integer> alacarteDict;
-    Map<MenuItem, Integer> setDict;
+    ArrayList<Order> orders = new ArrayList<>();
+    Map<MenuItem, Integer> alacarteDict = new HashMap<>();
+    Map<MenuItem, Integer> setDict = new HashMap<>();
 
 
     void calculateRevenue(){
@@ -50,6 +51,7 @@ public abstract class RevenueReport {
         System.out.println("Ala Carte Items");
         System.out.println("================");
         System.out.println("Item Name | Sales Volume | Revenue");
+        if(alacarteDict.entrySet().size() == 0) System.out.println("No Ala Carte Items ordered");
         for (Map.Entry<MenuItem, Integer> entry : alacarteDict.entrySet()) {
             printMenuItem(entry.getKey(), entry.getValue());
         }
@@ -57,6 +59,7 @@ public abstract class RevenueReport {
         System.out.println("Set Items");
         System.out.println("================");
         System.out.println("Item Name | Sales Volume | Revenue");
+        if(setDict.entrySet().size() == 0) System.out.println("No Set Items ordered");
         for (Map.Entry<MenuItem, Integer> entry : setDict.entrySet()) {
             printMenuItem(entry.getKey(), entry.getValue());
         }

@@ -55,7 +55,6 @@ public class Restaurant implements ManageRevenueReport{
     public void addTable(int capacity){
         int tableNumber = allTables.size()+1;
         Table newTable = new Table(tableNumber, capacity);
-        System.out.println("Table Number " + tableNumber + " with capacity " + capacity + " has been created.");
         allTables.add(newTable);
     }
 
@@ -83,7 +82,7 @@ public class Restaurant implements ManageRevenueReport{
 
     public Table getAvailableTable(int numPax){
         for(Table t: allTables){
-            if(t.isAvailable()){
+            if(t.isAvailable() && t.getCapacity() >= numPax){
                 return t;
             }
         }
@@ -146,12 +145,14 @@ public class Restaurant implements ManageRevenueReport{
             ArrayList<Reservation> tableReservations = currTable.getReservations();
             for(int j = 0;j<tableReservations.size();j++){
                 LocalDateTime reservationTime = tableReservations.get(j).getReservationDateTime();
-                if(reservationTime.toLocalDate() == date){
+                if(reservationTime.toLocalDate().isEqual(date)){
                     LocalTime unavailableTime = reservationTime.toLocalTime();
                     availableTimes.get(unavailableTime).remove(currTable);
                 }
             }
         }
+        //remove timing if no tables available
+        availableTimes.entrySet().removeIf(elem->elem.getValue().size() == 0);
         return availableTimes;
     }
 
@@ -159,13 +160,11 @@ public class Restaurant implements ManageRevenueReport{
     public Map<LocalTime, ArrayList<Table>> getPossibleTimings(int numPax){
         Map<LocalTime, ArrayList<Table>> allTimes = new HashMap<>();
         LocalTime currTime = openingTime;
-//        System.out.println("Opening time: " + openingTime.toString());
-//        System.out.println("Closing time: " + closingTime.toString());
-//        System.out.println("All Tables Size: " + getAllTables().size());
         while(currTime.isBefore(closingTime)){
             ArrayList<Table> tableList = new ArrayList<>();
             for(int i = 0;i < getAllTables().size();i++){
                 Table currTable = getAllTables().get(i);
+
                 if(currTable.getCapacity() >= numPax){
                     tableList.add(currTable);
                 }
@@ -209,7 +208,7 @@ public class Restaurant implements ManageRevenueReport{
     }
     public void generateRevenueReport(LocalDate date) {
         RevenueReport report = new DailyRevenueReport(allOrders, date);
-        System.out.println("Daily Revenue Report for " +  date.format(formatter));
+        System.out.println("Daily Revenue Report for " +  date.toString());
         System.out.println();
         report.printRevenueReport();
     }

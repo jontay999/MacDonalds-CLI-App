@@ -34,7 +34,7 @@ public class Reservation implements Comparable<Object>{
     }
 
     public void printReservation(){
-        System.out.print("Reservation Date Time: " + getReservationDateTime().toString() + " | Customer Name: " + customer.getName() + " | Customer Contact Number: " + customer.getContact() + " | Pax: " + numberOfPax);
+        System.out.print("Reservation Date Time: " + getReservationDateTime().toString() + " | Customer Name: " + customer.getName() + " | Customer Contact Number: " + customer.getContact() + " | Pax: " + numberOfPax + "\n");
     }
 
 
