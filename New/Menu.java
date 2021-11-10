@@ -8,9 +8,9 @@ public class Menu implements MenuControl {
     private String name;
     private LocalDateTime lastUpdated;
 
-    Menu(String name, LocalDateTime lastUpdated){
+    Menu(String name){
         this.name=name;
-        this.lastUpdated=lastUpdated;
+        this.lastUpdated=LocalDateTime.now();
     }
 
     public void addItem(Set item) {

@@ -5,9 +5,10 @@ public class Customer extends Person {
     private int contact;
     Membership membership;
 
-    Customer(String name, int contact){
+    Customer(String name, int contact, Membership membership){
         this.name=name;
         this.contact=contact;
+        this.membership = membership;
     }
 
     public Order getOrder() {

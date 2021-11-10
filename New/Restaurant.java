@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ public class Restaurant implements ManageRevenueReport{
     ArrayList<Staff> allStaff;
     ArrayList<Order> allOrders;
     ArrayList<Customer> allCustomers;
+    ArrayList<Menu> allMenus;
+    ArrayList<Membership> allMemberships;
     LocalTime openingTime;
     LocalTime closingTime;
     String restaurantName;
@@ -29,6 +32,8 @@ public class Restaurant implements ManageRevenueReport{
         this.allStaff = new ArrayList<>();
         this.allOrders = new ArrayList<>();
         this.allCustomers = new ArrayList<>();
+        this.allMenus = new ArrayList<>();
+        this.allMemberships = new ArrayList<>();
     }
 
     public void addCustomer(Customer c){
@@ -39,6 +44,14 @@ public class Restaurant implements ManageRevenueReport{
         this.allOrders.add(o);
     }
 
+    public void addMenu(Menu menu){
+        allMenus.add(menu);
+    }
+
+    public void addMembership(Membership membership){
+        allMemberships.add(membership);
+    }
+
     public void addTable(int capacity){
         Table newTable = new Table(allTables.size()+1, capacity);
         allTables.add(newTable);
@@ -47,6 +60,63 @@ public class Restaurant implements ManageRevenueReport{
     public void addStaff(String name, JobTitle title, Gender gender){
         Staff newStaff = new Staff(name, gender, title);
         allStaff.add(newStaff);
+    }
+
+    public ArrayList<Menu> getAllMenus() {
+        return allMenus;
+    }
+
+    public ArrayList<Membership> getAllMemberships() {
+        return allMemberships;
+    }
+
+    public Customer findCustomer(int contact){
+        for(Customer c: allCustomers){
+            if(c.getContact() == contact) return c;
+        }
+        return null;
+    }
+
+
+
+    public Table getAvailableTable(int numPax){
+        for(Table t: allTables){
+            if(t.isAvailable()){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public Table getReservedTable(Customer c){
+        LocalDateTime currReservationTime = LocalDateTime.now();
+        currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
+        currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
+
+        Reservation customerReservation = null;
+        for(Table t: allTables){
+            customerReservation = t.checkReservation(c.getContact(), currReservationTime);
+            if(customerReservation != null){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    //sorted by date time
+    public ArrayList<Reservation> getAllReservations(){
+        ArrayList<Reservation> allReservations = new ArrayList<>();
+        for(Table t: allTables){
+            for(Reservation r: t.getReservations()){
+                allReservations.add(r);
+            }
+        }
+        Collections.sort(allReservations);
+        return allReservations;
+    }
+
+    public ArrayList<Staff> getAllStaff(){
+        return allStaff;
     }
 
     public String getRestaurantName(){
@@ -79,6 +149,9 @@ public class Restaurant implements ManageRevenueReport{
     public Map<LocalTime, ArrayList<Table>> getPossibleTimings(int numPax){
         Map<LocalTime, ArrayList<Table>> allTimes = new HashMap<>();
         LocalTime currTime = openingTime;
+//        System.out.println("Opening time: " + openingTime.toString());
+//        System.out.println("Closing time: " + closingTime.toString());
+//        System.out.println("All Tables Size: " + getAllTables().size());
         while(currTime.isBefore(closingTime)){
             ArrayList<Table> tableList = new ArrayList<>();
             for(int i = 0;i < getAllTables().size();i++){
@@ -88,6 +161,7 @@ public class Restaurant implements ManageRevenueReport{
                 }
             }
             allTimes.put(currTime, tableList);
+            currTime = currTime.plusHours(1);
         }
         return allTimes;
     }
