@@ -1,5 +1,6 @@
 package MacDonalds.New;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,6 +12,7 @@ public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
     private static final Category[] allCategories = Category.values();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     public static Restaurant MacDonalds;
 
     public static void main(String[] args){
@@ -23,6 +25,13 @@ public class MacDonaldsApp {
         for(int i = 0;i<20;i++){
             int capacity = ((i/5)+1)*2;
             MacDonalds.addTable(capacity);
+        }
+        MacDonalds.addTable(10);
+
+        String[] memberships = {"Bronze", "Silver", "Gold"};
+        for (int i = 1;i<=memberships.length;i++){
+            Membership newMembership = new Membership(memberships[i-1], i*0.05);
+            MacDonalds.addMembership(newMembership);
         }
 
         //add staff
@@ -95,9 +104,9 @@ public class MacDonaldsApp {
             LocalDate formattedDate = LocalDate.parse(inputDate, dateFormatter);
             MacDonalds.generateRevenueReport(formattedDate);
         }else if(selection == 2){
-            System.out.println("Enter month :");
+            System.out.println("Enter month (1-12):");
             Month month = Month.of(scanner.nextInt());
-            System.out.println("Enter year: ");
+            System.out.println("Enter year (e.g. 2021) : ");
             int year = scanner.nextInt();
             MacDonalds.generateRevenueReport(month, year);
         }else if(selection == 3){
@@ -118,7 +127,7 @@ public class MacDonaldsApp {
             ArrayList<Membership> allMemberships = MacDonalds.getAllMemberships();
             if(allMemberships.size() == 0) System.out.println("No memberships currently");
             for(int i = 0;i<allMemberships.size();i++){
-                System.out.println((i+1) + ". " + allMemberships.get(i).getType() + " | Discount: " + allMemberships.get(i).getDiscount()*100 + "%");
+                System.out.println((i+1) + ". " + allMemberships.get(i).getType() + " | Discount: " + (int)(allMemberships.get(i).getDiscount()*100) + "%");
             }
         }else if(selection == 2){
             System.out.println("\nRestaurant Details");
@@ -150,6 +159,7 @@ public class MacDonaldsApp {
             System.out.println("Enter capacity of table: ");
             int capacity = scanner.nextInt();
             MacDonalds.addTable(capacity);
+            System.out.println("Table successfully created");
         }else{
             forStupid();
         }
@@ -301,11 +311,13 @@ public class MacDonaldsApp {
 
     public static void viewAllReservations(){
         ArrayList<Reservation> allReservations = MacDonalds.getAllReservations();
+        System.out.println("\nViewing All Reservations");
+        System.out.println("======================");
         if(allReservations.size() == 0){
             System.out.println("\nNo current reservations");
         }else{
-            for (Reservation allReservation : allReservations) {
-                allReservation.printReservation();
+            for (Reservation r : allReservations) {
+                r.printReservation();
             }
         }
         System.out.println();
@@ -350,10 +362,18 @@ public class MacDonaldsApp {
 
         //error checking here to make sure valid reservation date
         LocalDate date = LocalDate.parse(reservationDate, dateFormatter);
+        if(date.isBefore(LocalDate.now())){
+            forStupid();
+            return;
+        }
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
         ArrayList<LocalTime> timings = new ArrayList<LocalTime>(availableTimings.keySet());
         Collections.sort(timings);
+        if(timings.size() == 0){
+            System.out.println("Sorry, there are no available tables!");
+            return;
+        }
         for(int i = 0;i<timings.size();i++){
             System.out.println((i+1) + ". " + timings.get(i).toString());
         }

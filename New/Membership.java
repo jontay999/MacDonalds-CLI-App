@@ -1,30 +1,21 @@
 package MacDonalds.New;
 
-enum MembershipType{GOLD, SILVER, GREEN};
+
 
 public class Membership {
-    MembershipType type;
+    String type;
     double discount;
 
-    Membership(MembershipType type){
-        switch(type){
-            case GOLD:
-                this.discount=0.15;
-                break;
-            case SILVER:
-                this.discount=0.10;
-                break;
-            case GREEN:
-                this.discount=0.05;
-                break;
-        }
+    Membership(String type, double discount){
+        this.type = type;
+        this.discount = discount;
     }
 
-    public MembershipType getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(MembershipType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

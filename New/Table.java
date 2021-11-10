@@ -56,10 +56,10 @@ public class Table implements MakeReservation {
                 System.out.println("Customer contact: " +r.getCustomer().getContact());
                 System.out.println("Number of Pax: " + r.getNumberOfPax());
                 System.out.println("Reservation Timing: " + r.getReservationDateTime());
-                return;
+//                return;
             }
         }
-        System.out.println("No reservation could be found for the contact number " + contact + " at " + timing.format(formatter));
+//        System.out.println("No reservation could be found for the contact number " + contact + " at " + timing.format(formatter));
     };
 
     public boolean isAvailable(){
