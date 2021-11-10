@@ -77,6 +77,32 @@ public class Restaurant implements ManageRevenueReport{
         return null;
     }
 
+
+
+    public Table getAvailableTable(int numPax){
+        for(Table t: allTables){
+            if(t.isAvailable()){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public Table getReservedTable(Customer c){
+        LocalDateTime currReservationTime = LocalDateTime.now();
+        currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
+        currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
+
+        Reservation customerReservation = null;
+        for(Table t: allTables){
+            customerReservation = t.checkReservation(c.getContact(), currReservationTime);
+            if(customerReservation != null){
+                return t;
+            }
+        }
+        return null;
+    }
+
     //sorted by date time
     public ArrayList<Reservation> getAllReservations(){
         ArrayList<Reservation> allReservations = new ArrayList<>();
@@ -87,6 +113,10 @@ public class Restaurant implements ManageRevenueReport{
         }
         Collections.sort(allReservations);
         return allReservations;
+    }
+
+    public ArrayList<Staff> getAllStaff(){
+        return allStaff;
     }
 
     public String getRestaurantName(){

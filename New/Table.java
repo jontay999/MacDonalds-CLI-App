@@ -44,6 +44,8 @@ public class Table implements MakeReservation {
         return null;
     };
 
+
+
     public void printReservationConfirmation(int contact, LocalDateTime timing){
         clearOldReservations();
         for(Reservation r: reservations){
@@ -59,6 +61,25 @@ public class Table implements MakeReservation {
         }
         System.out.println("No reservation could be found for the contact number " + contact + " at " + timing.format(formatter));
     };
+
+    public boolean isAvailable(){
+        if(occupyingCustomer == null){
+            LocalDateTime currReservationTime = LocalDateTime.now();
+            currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
+            currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
+
+            for(Reservation r: reservations){
+                if(r.getReservationDateTime() == currReservationTime){
+                    //not occupied but reserved
+                    return false;
+                }
+            }
+            //not occupied and not reserved
+            return true;
+        }
+        //is occupied
+        return false;
+    }
 
     public void clearOldReservations(){
         LocalDateTime timeExpiry = LocalDateTime.now().minusHours(1);
@@ -92,6 +113,10 @@ public class Table implements MakeReservation {
 
     public void setOccupyingCustomer(Customer customer) {
         this.occupyingCustomer = customer;
+    }
+
+    public void printTable(){
+        System.out.println("Table Number " + getTableNumber() + " | Capacity: " + getCapacity() + " | Is Available Now: " + (isAvailable() ? "True" : "False"));
     }
 
 

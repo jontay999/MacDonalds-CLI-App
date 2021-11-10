@@ -45,6 +45,15 @@ public class MacDonaldsApp {
                 case 2:
                     ReservationSelection();
                     break;
+                case 3:
+                    SeatCustomerSelection();
+                    break;
+                case 4:
+                    OrderSelection();
+                    break;
+                case 5:
+                    RestaurantSelection();
+                    break;
                 default:
                     System.out.println("Exiting application");
                     System.exit(0);
@@ -52,6 +61,114 @@ public class MacDonaldsApp {
         }
     }
 
+    public static void RestaurantSelection(){
+        String[] options = {"Tables", "Staff", "Revenue Report", "Restaurant Information"};
+        int selection = getUserInput("Restaurant Info Options", options);
+        switch(selection){
+            case 1:
+                TableSelection();
+                break;
+            case 2:
+                StaffSelection();
+                break;
+            case 3:
+                RevenueReportSelection();
+                break;
+            case 4:
+                RestaurantInformation();
+                break;
+            default:
+                forStupid();
+        }
+    }
+
+    public static void RevenueReportSelection(){
+        return;
+    }
+
+    public static void RestaurantInformation(){
+        return;
+    }
+
+    public static void TableSelection(){
+        String[] options= {"View All Tables", "Add a Table"};
+        int selection = getUserInput("Table Options", options);
+        if(selection == 1){
+            for(Table t: MacDonalds.getAllTables()){
+                t.printTable();
+            }
+        }else if(selection == 2){
+            System.out.println("Enter capacity of table: ");
+            int capacity = scanner.nextInt();
+            MacDonalds.addTable(capacity);
+        }
+    }
+
+    public static void forStupid(){
+        System.out.println("Please don't stupid, make valid options pls...");
+    }
+
+    public static void StaffSelection(){
+        String[] options = {"View All Staff", "Add Staff"};
+        int selection = getUserInput("Staff Options", options);
+        if(selection == 1){
+            for(Staff s : MacDonalds.getAllStaff()){
+                s.printStaffInfo();
+            }
+        }else if(selection == 2){
+            System.out.println("Enter new staff name: ");
+            String name = scanner.next();
+            Gender gender;
+            JobTitle jobTitle;
+            System.out.println("Select staff gender");
+            System.out.println("1. Male");
+            System.out.println("2. Female");
+            int genderSelection = scanner.nextInt();
+            if(genderSelection == 1) gender = Gender.MALE;
+            else if(genderSelection == 2) gender = Gender.FEMALE;
+            else{
+                forStupid();
+                return;
+            }
+
+            System.out.println("Select job title");
+            System.out.println("1. Employee");
+            System.out.println("2. Manager");
+            int jobTitleSelection = scanner.nextInt();
+            if(jobTitleSelection == 1) jobTitle = JobTitle.EMPLOYEE;
+            else if(jobTitleSelection == 2) jobTitle = JobTitle.MANAGER;
+            else{
+                forStupid();
+                return;
+            }
+
+            MacDonalds.addStaff(name, jobTitle, gender);
+        }
+    }
+
+    public static void SeatCustomerSelection(){
+        Table assignedTable;
+        Customer currCustomer = createCustomerIfNotExist();
+        assignedTable = MacDonalds.getReservedTable(currCustomer);
+
+        //no reservation
+        if(assignedTable == null){
+            System.out.println("How many people are there dining in?");
+            int numPax = scanner.nextInt();
+            assignedTable = MacDonalds.getAvailableTable(numPax);
+            if(assignedTable == null){
+                System.out.println("Sorry! There are no available tables at this time. Come back later!\n");
+                return;
+            }
+        }
+
+        System.out.println("Your table number is " + assignedTable.getTableNumber() + "\n");
+        assignedTable.setOccupyingCustomer(currCustomer); //actually seat the customer
+    }
+
+    public static void OrderSelection(){
+        return;
+    }
 
     public static void ReservationSelection(){
         String[] options = {"View Reservations", "Make a Reservation"};
@@ -73,8 +190,7 @@ public class MacDonaldsApp {
 
     }
 
-    public static void makeReservation(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y");
+    public static Customer createCustomerIfNotExist(){
         System.out.println("Enter contact number: ");
         int contact = scanner.nextInt();
         Customer currCustomer = MacDonalds.findCustomer(contact);
@@ -99,6 +215,12 @@ public class MacDonaldsApp {
             currCustomer = new Customer(name, contact, customerMembership);
             MacDonalds.addCustomer(currCustomer);
         }
+        return currCustomer;
+    }
+
+    public static void makeReservation(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y");
+        Customer currCustomer = createCustomerIfNotExist();
         System.out.println("How many people are coming?");
         int numberOfPax = scanner.nextInt();
         System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yy)");
@@ -108,7 +230,6 @@ public class MacDonaldsApp {
         LocalDate date = LocalDate.parse(reservationDate, formatter);
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
-        //idk if this actually sorts it...
         ArrayList<LocalTime> timings = new ArrayList(availableTimings.keySet());
         Collections.sort(timings);
         for(int i = 0;i<timings.size();i++){

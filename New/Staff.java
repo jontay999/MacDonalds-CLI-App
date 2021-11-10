@@ -29,5 +29,8 @@ public class Staff extends Person {
         this.jobTitle = jobTitle;
     }
 
+    public void printStaffInfo(){
+        System.out.println("Name: "+ getName() + " | Gender: " + getGender() + " | Job Title: " + getJobTitle());
+    }
     
 }
