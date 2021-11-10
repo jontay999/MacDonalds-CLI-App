@@ -1,10 +1,8 @@
 package MacDonalds.New;
 
-import java.time.LocalDateTime;
-
 public class initMenu {
-    Menu menu0 = new Menu("Singapore Menu",LocalDateTime.now());
-    Menu menu2 = new Menu("Breakfast Menu", LocalDateTime.now());
+    Menu menu0 = new Menu("Singapore Menu");
+    Menu menu2 = new Menu("Breakfast Menu");
 
     initMenu(){
         //add alacarte items

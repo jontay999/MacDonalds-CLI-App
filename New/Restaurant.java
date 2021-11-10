@@ -193,4 +193,8 @@ public class Restaurant implements ManageRevenueReport{
         System.out.println();
         report.printRevenueReport();
     }
+
+    public ArrayList<Order> getAllOrders(){
+        return allOrders;
+    }
 }

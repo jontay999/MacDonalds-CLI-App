@@ -171,7 +171,19 @@ public class MacDonaldsApp {
     }
 
     public static void OrderSelection(){
-        return;
+        String[] options = {"Edit Order","Create New Order"};
+        int selection = getUserInput("Order Options", options);
+        if(selection==1) editOrder();
+        else if(selection==2) newOrder();
+    }
+
+    public static void editOrder(){
+        
+    }
+
+    public static void newOrder(){
+        
+
     }
 
     public static void ReservationSelection(){
@@ -234,7 +246,7 @@ public class MacDonaldsApp {
         LocalDate date = LocalDate.parse(reservationDate, formatter);
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
-        ArrayList<LocalTime> timings = new ArrayList(availableTimings.keySet());
+        ArrayList<LocalTime> timings = new ArrayList<LocalTime>(availableTimings.keySet());
         Collections.sort(timings);
         for(int i = 0;i<timings.size();i++){
             System.out.println((i+1) + ". " + timings.get(i).toString());
