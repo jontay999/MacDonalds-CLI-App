@@ -105,7 +105,7 @@ public class Menu {
         for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         for(int i=0;i<getMaxItemLength()+5;i++)System.out.print(" ");
-        System.out.println("MacDonalds " +name+" menu ");
+        System.out.println("MacDonalds " +name);
         for(int i=0;i<getMaxItemLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         System.out.println("\nAla-Carte Items:");

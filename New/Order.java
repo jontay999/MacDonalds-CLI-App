@@ -72,21 +72,24 @@ public class Order implements OrderManager {
     public void viewOrder() {
         System.out.println("\nAlacarte Items");
         System.out.println("------------------------");
+        int i=1;
         for(Alacarte item:alacarteList){
-            System.out.printf("%s: S$%.2f\n",item.getName(),item.getPrice());
+            System.out.printf("%d. %s: S$%.2f\n",i,item.getName(),item.getPrice());
+            i++;
         }
         System.out.println("\nSet Items");
         System.out.println("------------------------");
+        int j=1;
         for(Set item:setList){
-            System.out.printf("%s: S$%.2f\n",item.getName(),item.getPrice());
+            System.out.printf("%d. %s: S$%.2f\n",j,item.getName(),item.getPrice());
+            j++;
         }
     }
 
     public void printOrderInvoice() {
-        System.out.println("This order is for table: "+this.tableId);
-        System.out.println("Order details are as follows:");
+        System.out.printf("\n------------------Table %d------------------\n\n",this.tableId);
         this.viewOrder();
-        System.out.println("Total price: "+this.totalPrice);
+        System.out.printf("\nTotal price: S$%.2f\nThank you and hope to see you again!\n",this.totalPrice);
     }
     
 }

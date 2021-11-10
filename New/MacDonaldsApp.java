@@ -8,6 +8,8 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import javax.swing.plaf.TreeUI;
+
 public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
@@ -75,8 +77,8 @@ public class MacDonaldsApp {
     }
 
     public static void RestaurantSelection(){
-        String[] options = {"Tables", "Staff", "Revenue Report", "Restaurant Information"};
-        int selection = getUserInput("Restaurant Info Options", options);
+        String[] options = {"Tables", "Staff", "Revenue Report", "Restaurant Information","Back"};
+        int selection = getUserInput("RESTAURANT INFO OPTIONS", options);
         switch(selection){
             case 1:
                 TableSelection();
@@ -90,6 +92,8 @@ public class MacDonaldsApp {
             case 4:
                 RestaurantInformation();
                 break;
+            case 5:
+                return;
             default:
                 forStupid();
         }
@@ -97,7 +101,7 @@ public class MacDonaldsApp {
 
     public static void RevenueReportSelection(){
         String[] options = {"Daily Revenue Report", "Monthly Revenue Report", "Yearly Revenue Report"};
-        int selection = getUserInput("Revenue Report Options", options);
+        int selection = getUserInput("REVENUE REPORT OPTIONS", options);
         if(selection == 1){
             System.out.println("Enter date (dd/mm/yyyy format) :");
             String inputDate = scanner.next();
@@ -120,7 +124,7 @@ public class MacDonaldsApp {
 
     public static void RestaurantInformation(){
         String[] options = {"Memberships", "Restaurant Details"};
-        int selection = getUserInput("Info Options", options);
+        int selection = getUserInput("INFO OPTIONS", options);
         if(selection == 1){
             System.out.println("\nMembership Details");
             System.out.println("=====================");
@@ -146,7 +150,7 @@ public class MacDonaldsApp {
 
     public static void TableSelection(){
         String[] options= {"View All Tables", "Add a Table"};
-        int selection = getUserInput("Table Options", options);
+        int selection = getUserInput("TABLE OPTIONS", options);
         if(selection == 1){
             System.out.println("\nViewing All Tables");
             System.out.println("=====================");
@@ -171,7 +175,7 @@ public class MacDonaldsApp {
 
     public static void StaffSelection(){
         String[] options = {"View All Staff", "Add Staff"};
-        int selection = getUserInput("Staff Options", options);
+        int selection = getUserInput("STAFF OPTIONS", options);
         if(selection == 1){
             for(Staff s : MacDonalds.getAllStaff()){
                 s.printStaffInfo();
@@ -228,10 +232,13 @@ public class MacDonaldsApp {
     }
 
     public static void OrderSelection(){
-        String[] options = {"Edit Order","Create New Order"};
-        int selection = getUserInput("Order Options", options);
-        if(selection==1) editOrder();
-        else if(selection==2) newOrder();
+        String[] options = {"New Order","Edit Order","View Order","Close Order","Back"};
+        int selection = getUserInput("ORDER OPTIONS", options);
+        if(selection==1) newOrder();
+        else if(selection==2) editOrder();
+        else if(selection==3) viewOrder();
+        else if(selection==4) closeOrder();
+        else if(selection==5) return;
     }
 
     public static void editOrder(){
@@ -239,6 +246,11 @@ public class MacDonaldsApp {
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
         order.viewOrder();
+        String [] options = {"Alacarte","Set","Done"};
+        int selection = getUserInput("SELECT ITEM TYPE TO REMOVE", options);
+        System.out.print("Enter index of item to edit: ");
+        int toRemove = scanner.nextInt();
+        order.removeItem(toRemove-1, selection==1?false:true);
     }
 
     public static void newOrder(){
@@ -248,14 +260,28 @@ public class MacDonaldsApp {
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};
         while(true){
-            int selection = getUserInput("Select item type", options);
+            int selection = getUserInput("SELECT ITEM TYPE", options);
             if(selection==1)order.addItem(getAlacarteItemInput(menu));
             else if(selection==2)order.addItem(getSetItemInput(menu));
             else if(selection==3) break;
         }
+        customer.setOrder(order);
     }
 
-    // public static void closeOrder
+    public static void viewOrder(){
+        Table table = getTableSelection();
+        Customer customer = table.getOccupyingCustomer();
+        Order order = customer.getOrder();
+        order.viewOrder();
+    }
+
+    public static void closeOrder(){
+        Table table = getTableSelection();
+        Customer customer = table.getOccupyingCustomer();
+        Order order = customer.getOrder();
+        order.printOrderInvoice();
+        table.setOccupyingCustomer(null);
+    }
 
     public static Table getTableSelection(){
         ArrayList<Table> tables = MacDonalds.getOccupiedTables();
@@ -265,7 +291,7 @@ public class MacDonaldsApp {
             options[i]="Table "+table.getTableNumber();
             i++;
         }
-        int selection = getUserInput("Select Table", options);
+        int selection = getUserInput("SELECT TABLE", options);
         return tables.get(selection-1);
     }
 
@@ -276,7 +302,7 @@ public class MacDonaldsApp {
         for(Menu menu:menus){
             options[i]=menu.getName();
         }
-        int selection = getUserInput("Select Menu", options);
+        int selection = getUserInput("SELECT MENU", options);
         return menus.get(selection-1);
     }
 
@@ -286,8 +312,9 @@ public class MacDonaldsApp {
         int i=0;
         for(Alacarte item:items){
             options[i]=item.getName();
+            i++;
         }
-        int selection = getUserInput("Select Item", options);
+        int selection = getUserInput("SELECT ITEM", options);
         return items.get(selection-1);
     }
 
@@ -297,16 +324,18 @@ public class MacDonaldsApp {
         int i=0;
         for(Set item:items){
             options[i]=item.getName();
+            i++;
         }
-        int selection = getUserInput("Select Item", options);
+        int selection = getUserInput("SELECT ITEM", options);
         return items.get(selection-1);
     }
 
     public static void ReservationSelection(){
-        String[] options = {"View Reservations", "Make a Reservation"};
-        int selection = getUserInput("Reservation Options", options);
+        String[] options = {"View Reservations", "Make a Reservation","Back"};
+        int selection = getUserInput("RESERVATION OPTIONS", options);
         if(selection == 1) viewAllReservations();
         else if(selection == 2) makeReservation();
+        else if(selection==3) return;
     }
 
     public static void viewAllReservations(){
@@ -388,14 +417,56 @@ public class MacDonaldsApp {
             LocalDateTime reservationDateTime = LocalDateTime.of(date, reservationTime);
             reservedTable.makeReservation(currCustomer, reservationDateTime, numberOfPax);
         }
-
     }
 
     public static void MenuSelection(){
-        String[] options = {"Choose Menu","Create Menu"};
+        String[] options = {"Choose Menu","Create Menu","Back"};
         int selection = getUserInput("MENU OPTIONS", options);
         if(selection==1)pickMenu();
-        else if(selection==2)System.out.println("CREATE NEW MENU");
+        else if(selection==2)createNewMenu();
+        else if(selection==3)return;
+    }
+
+    public static void createNewMenu(){
+        System.out.print("Enter a name: ");
+        String name = scanner.next();
+        Menu menu = new Menu(name);
+        System.out.println(name);
+        String [] options = {"Alacarte","Set","Done"};
+        while(true){
+            int selection = getUserInput("SELECT TYPE OF ITEM TO ADD", options);
+            if(selection==1)menu.addItem(createItem());
+            else if(selection==2)menu.addItem(createSet());
+            else if(selection==3)break;
+        }
+        MacDonalds.addMenu(menu);
+    }
+
+    public static Alacarte createItem(){
+        System.out.print("Enter item name: ");
+        String name=scanner.next();
+        System.out.print("Enter item description: ");
+        String description=scanner.next();
+        System.out.print("Enter item price: ");
+        float price=(float)scanner.nextDouble();
+        String [] cats = {"Main Course", "Drinks", "Dessert", "Sides"};
+        int selection = getUserInput("Select item category", cats);
+        Category category=allCategories[selection-1];
+        Alacarte item = new Alacarte(name,description,price,category);
+        return item;
+    }
+
+    public static Set createSet(){
+        System.out.print("Enter Set name: ");
+        String name=scanner.next();
+        Set set = new Set(name,name);
+        String [] options = {"Add Item","Done"};
+        while(true){
+            int selection = getUserInput("OPTIONS", options);
+            if(selection==1)set.addAlacarteItem(createItem());
+            else if(selection==2)break;
+        }
+        return set;
     }
 
     public static void pickMenu(){
@@ -413,6 +484,35 @@ public class MacDonaldsApp {
         String[] options2 = {"Display Menu","Edit Menu"};
         int selection2 = getUserInput(chosenMenuName.toUpperCase()+" OPTIONS", options2);
         if(selection2==1)chosenMenu.printMenu();
+        if(selection2==2)editMenu(chosenMenu);
+    }
+
+    public static void editMenu(Menu menu){
+        String [] options = {"Alacarte","Set"};
+        int selection = getUserInput("TYPE OF ITEM TO EDIT", options);
+        if(selection==1)editItem(getAlacarteItemInput(menu));
+        else if(selection==2)editItem(getSetItemInput(menu));
+    }
+
+    public static void editItem(Alacarte item){
+        String [] options = {"Name","Price"};
+        int selection = getUserInput("FIELD TO EDIT", options);
+        if(selection==1){
+            System.out.println("Enter new name:");
+            String name = scanner.next();
+            item.setName(name);
+        }
+        else if(selection==2){
+            System.out.println("Enter new price:");
+            float price = (float)scanner.nextDouble();
+            item.setPrice(price);
+        }
+    }
+
+    public static void editItem(Set item){
+        System.out.println("Enter new name:");
+        String name = scanner.nextLine();
+        item.setName(name);
     }
 
     public static int getUserInput(String title, String []options){
