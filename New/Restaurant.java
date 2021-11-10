@@ -119,6 +119,14 @@ public class Restaurant implements ManageRevenueReport{
         return allStaff;
     }
 
+    public LocalTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
+    }
+
     public String getRestaurantName(){
         return this.restaurantName;
     }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PromoSet extends Set implements Promotion {
     private float finalPrice;
 
-    PromoSet(String name, String description, float finalPrice, ArrayList<Alacarte>alacarteItems) {
+    PromoSet(String name, String description, float finalPrice) {
         super(name, description);
         this.finalPrice=finalPrice;
     }
