@@ -116,7 +116,7 @@ public class Table implements MakeReservation {
     }
 
     public void printTable(){
-        System.out.println("Table Number " + getTableNumber() + " | Capacity: " + getCapacity() + " | Is Available Now: " + (isAvailable() ? "True" : "False"));
+        System.out.println("Table Number " + getTableNumber() + " | Capacity: " + getCapacity() + " | Is Available Now: " + (isAvailable() ? "Yes" : "No"));
     }
 
 

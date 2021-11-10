@@ -15,9 +15,6 @@ public class MacDonaldsApp {
 
     public static void main(String[] args){
 
-
-        new initMenu().getMenu(0).printMenu();
-
         LocalTime openingTime = LocalTime.parse("09:00");
         LocalTime closingTime = LocalTime.parse("18:00");
         MacDonalds = new Restaurant("REP-Donalds", "Banyanyan Hall", openingTime, closingTime);
@@ -36,8 +33,8 @@ public class MacDonaldsApp {
             MacDonalds.addStaff(names[i], role, gender);
         }
 
-        //add menu, no sets, 5 promo alacarte, 5 alacarte, 1 promoset, 1  non promoset
-        addMenus();
+        //add menu,
+        MacDonalds.addMenu(new initMenu().getMenu(0));
 
         //Starting Options
         System.out.println("Hello! Welcome to " + MacDonalds.getRestaurantName() + " at " + MacDonalds.getLocation());
@@ -116,12 +113,16 @@ public class MacDonaldsApp {
         String[] options = {"Memberships", "Restaurant Details"};
         int selection = getUserInput("Info Options", options);
         if(selection == 1){
+            System.out.println("\nMembership Details");
+            System.out.println("=====================");
             ArrayList<Membership> allMemberships = MacDonalds.getAllMemberships();
             if(allMemberships.size() == 0) System.out.println("No memberships currently");
             for(int i = 0;i<allMemberships.size();i++){
                 System.out.println((i+1) + ". " + allMemberships.get(i).getType() + " | Discount: " + allMemberships.get(i).getDiscount()*100 + "%");
             }
         }else if(selection == 2){
+            System.out.println("\nRestaurant Details");
+            System.out.println("=====================");
             System.out.println("Restaurant Name: " + MacDonalds.getRestaurantName());
             System.out.println("Restaurant Location: " + MacDonalds.getLocation());
             System.out.println("Opening Time: " + MacDonalds.getOpeningTime().toString());
@@ -138,10 +139,14 @@ public class MacDonaldsApp {
         String[] options= {"View All Tables", "Add a Table"};
         int selection = getUserInput("Table Options", options);
         if(selection == 1){
+            System.out.println("\nViewing All Tables");
+            System.out.println("=====================");
             for(Table t: MacDonalds.getAllTables()){
                 t.printTable();
             }
         }else if(selection == 2){
+            System.out.println("\nCreating new table");
+            System.out.println("=====================");
             System.out.println("Enter capacity of table: ");
             int capacity = scanner.nextInt();
             MacDonalds.addTable(capacity);
@@ -226,7 +231,7 @@ public class MacDonaldsApp {
     public static void viewAllReservations(){
         ArrayList<Reservation> allReservations = MacDonalds.getAllReservations();
         if(allReservations.size() == 0){
-            System.out.println("\nNo current reservations\n");
+            System.out.println("\nNo current reservations");
         }else{
             for (Reservation allReservation : allReservations) {
                 allReservation.printReservation();

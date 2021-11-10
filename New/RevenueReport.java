@@ -14,6 +14,7 @@ public abstract class RevenueReport {
     void calculateRevenue(){
         double totalSales = 0;
         int totalVolume = 0;
+
         for(Order o: orders){
             for(Alacarte a: o.alacarteList){
                 totalSales += a.getPrice();

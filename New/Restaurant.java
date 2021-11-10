@@ -53,7 +53,9 @@ public class Restaurant implements ManageRevenueReport{
     }
 
     public void addTable(int capacity){
-        Table newTable = new Table(allTables.size()+1, capacity);
+        int tableNumber = allTables.size()+1;
+        Table newTable = new Table(tableNumber, capacity);
+        System.out.println("Table Number " + tableNumber + " with capacity " + capacity + " has been created.");
         allTables.add(newTable);
     }
 
@@ -176,6 +178,16 @@ public class Restaurant implements ManageRevenueReport{
 
     public ArrayList<Table> getAllTables(){
         return this.allTables;
+    }
+
+    public ArrayList<Table> getOccupiedTables(){
+        ArrayList<Table> occupiedTables = new ArrayList<>();
+        for(Table t: allTables){
+            if(t.getOccupyingCustomer() != null){
+                occupiedTables.add(t);
+            }
+        }
+        return occupiedTables;
     }
 
     public ArrayList<Customer> getAllCustomers(){
