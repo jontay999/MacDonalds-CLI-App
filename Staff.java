@@ -1,4 +1,11 @@
 package MacDonalds;
+/**
+ Represents a Staff working in the restaurant
+ Many staff can be in a restaurant
+ @author Dhruval Kothari
+ @version 1.0
+ @since 2021-11-09
+  * */
 
 public class Staff {
     private String name;
