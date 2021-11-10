@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ Represents a Restaurant
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public class Restaurant {
     private Table[] allTables;
     private Staff[] allStaff;

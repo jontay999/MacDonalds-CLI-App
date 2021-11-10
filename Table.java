@@ -1,8 +1,23 @@
 package MacDonalds;
 import java.time.LocalDateTime;
 
+/**
+ Represents a Table in the restaurant
+ Many tables can be in a restaurant
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+ * */
+
 public class Table {
+    /**
+     * Table Number created in ascending order
+     * */
     private int tableNum;
+
+    /**
+     * The capacity of the table
+     * */
     private int size;
     private boolean isOccupied;
     private boolean isReserved;
