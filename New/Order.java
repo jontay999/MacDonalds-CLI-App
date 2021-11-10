@@ -12,10 +12,10 @@ public class Order implements OrderManager {
     ArrayList<Set> setList = new ArrayList<Set>();
     float totalPrice=0;
 
-    Order(Customer customer, Staff staff, LocalDateTime dateTime, int tableId){
+    Order(Customer customer, Staff staff, int tableId){
         this.customer=customer;
         this.staff=staff;
-        this.dateTime=dateTime;
+        this.dateTime=LocalDateTime.now();
         this.tableId=tableId;
     }
 
@@ -37,10 +37,6 @@ public class Order implements OrderManager {
 
     public LocalDateTime getDateTime() {
         return this.dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
     public int getTableId() {

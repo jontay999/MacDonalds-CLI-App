@@ -13,6 +13,15 @@ public class Menu implements MenuControl {
         this.lastUpdated=LocalDateTime.now();
     }
 
+    public ArrayList<Alacarte> getAlacarteList(){
+        return this.alacarteList;
+    }
+
+    public ArrayList<Set> getSetList(){
+        return this.setList;
+    }
+
+
     public void addItem(Set item) {
         this.setList.add(item);        
     }

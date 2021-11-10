@@ -225,12 +225,71 @@ public class MacDonaldsApp {
     }
 
     public static void editOrder(){
-        
+        Table table = getTableSelection();
+        Customer customer = table.getOccupyingCustomer();
+        Order order = customer.getOrder();
+        order.viewOrder();
     }
 
     public static void newOrder(){
-        
+        Table table = getTableSelection();
+        Customer customer = table.getOccupyingCustomer();
+        Order order = new Order(customer,MacDonalds.allStaff.get(2),table.getTableNumber());
+        Menu menu = getMenuSelection();
+        String [] options = {"Alacarte","Set","Done"};
+        while(true){
+            int selection = getUserInput("Select item type", options);
+            if(selection==1)order.addItem(getAlacarteItemInput(menu));
+            else if(selection==2)order.addItem(getSetItemInput(menu));
+            else if(selection==3) break;
+        }
+    }
 
+    // public static void closeOrder
+
+    public static Table getTableSelection(){
+        ArrayList<Table> tables = MacDonalds.getOccupiedTables();
+        String [] options = new String[tables.size()];
+        int i=0;
+        for(Table table:tables){
+            options[i]="Table "+table.getTableNumber();
+            i++;
+        }
+        int selection = getUserInput("Select Table", options);
+        return tables.get(selection-1);
+    }
+
+    public static Menu getMenuSelection(){
+        ArrayList<Menu> menus = MacDonalds.getAllMenus();
+        String [] options = new String[menus.size()];
+        int i=0;
+        for(Menu menu:menus){
+            options[i]=menu.getName();
+        }
+        int selection = getUserInput("Select Menu", options);
+        return menus.get(selection-1);
+    }
+
+    public static Alacarte getAlacarteItemInput(Menu menu){
+        ArrayList<Alacarte> items = menu.getAlacarteList();
+        String [] options = new String[items.size()];
+        int i=0;
+        for(Alacarte item:items){
+            options[i]=item.getName();
+        }
+        int selection = getUserInput("Select Item", options);
+        return items.get(selection-1);
+    }
+
+    public static Set getSetItemInput(Menu menu){
+        ArrayList<Set> items = menu.getSetList();
+        String [] options = new String[items.size()];
+        int i=0;
+        for(Set item:items){
+            options[i]=item.getName();
+        }
+        int selection = getUserInput("Select Item", options);
+        return items.get(selection-1);
     }
 
     public static void ReservationSelection(){
