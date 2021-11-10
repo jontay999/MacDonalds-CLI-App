@@ -27,9 +27,14 @@ public class Set extends MenuItem {
         this.setPrice(prevPrice-itemPrice);
     }
 
-    public void printSet(){
+    public String getSetItems(){
+        String itemNames="(";
         for(Alacarte item:alacarteItems){
-            System.out.println("The item is: "+item.getName()+": "+item.getDescription());
+            itemNames+=item.getName();
+            itemNames+=", ";
         }
+        itemNames=itemNames.substring(0, itemNames.length()-2);
+        itemNames+=")";
+        return itemNames;
     }
 }

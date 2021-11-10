@@ -74,11 +74,15 @@ public class Order implements OrderManager {
     }
 
     public void viewOrder() {
+        System.out.println("\nAlacarte Items");
+        System.out.println("------------------------");
         for(Alacarte item:alacarteList){
-            System.out.println("Alacarte item is: "+item.getName()+":S$ "+item.getPrice());
+            System.out.printf("%s: S$%.2f\n",item.getName(),item.getPrice());
         }
-        for(Set set:setList){
-            set.printSet();
+        System.out.println("\nSet Items");
+        System.out.println("------------------------");
+        for(Set item:setList){
+            System.out.printf("%s: S$%.2f\n",item.getName(),item.getPrice());
         }
     }
 

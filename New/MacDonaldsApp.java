@@ -8,6 +8,10 @@ public class MacDonaldsApp {
     public static Restaurant MacDonalds;
 
     public static void main(String[] args){
+
+
+        new initMenu().getMenu(0).printMenu();;
+
         LocalTime openingTime = LocalTime.parse("09:00");
         LocalTime closingTime = LocalTime.parse("18:00");
         MacDonalds = new Restaurant("REP-Donalds", "Banyanyan Hall", openingTime, closingTime);
