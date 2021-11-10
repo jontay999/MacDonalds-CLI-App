@@ -3,17 +3,17 @@ package MacDonalds.New;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
+    public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
+    private static final Category[] allCategories = Category.values();
     public static Restaurant MacDonalds;
 
     public static void main(String[] args){
-
-
-        new initMenu().getMenu(0).printMenu();;
 
         LocalTime openingTime = LocalTime.parse("09:00");
         LocalTime closingTime = LocalTime.parse("18:00");
@@ -29,18 +29,18 @@ public class MacDonaldsApp {
         String[] names = new String[]{"Cady", "Grace", "Rihanna", "Taylor", "Dhruval", "Riley", "Marcus", "Pitbull"};
         for(int i = 0;i<names.length;i++){
             Gender gender = i > 4 ? Gender.MALE : Gender.FEMALE;
-            JobTitle role = i > 7 ? JobTitle.MANAGER : JobTitle.EMPLOYEE;
+            JobTitle role = i > 6 ? JobTitle.MANAGER : JobTitle.EMPLOYEE;
             MacDonalds.addStaff(names[i], role, gender);
         }
 
-        //add menu, no sets, 5 promo alacarte, 5 alacarte, 1 promoset, 1  non promoset
-        addMenus();
+        //add menu,
+        MacDonalds.addMenu(new initMenu().getMenu(0));
 
         //Starting Options
         System.out.println("Hello! Welcome to " + MacDonalds.getRestaurantName() + " at " + MacDonalds.getLocation());
         String[]options={"Menu","Reservation", "Seat Customers", "Orders", "Restaurant", "Quit"};
-        int selection=0;
-        while(selection!=options.length){
+        int selection;
+        while(true){
             selection = getUserInput("OPTIONS", options);
             switch(selection){
                 case 1:
@@ -87,24 +87,71 @@ public class MacDonaldsApp {
     }
 
     public static void RevenueReportSelection(){
-        return;
+        String[] options = {"Daily Revenue Report", "Monthly Revenue Report", "Yearly Revenue Report"};
+        int selection = getUserInput("Revenue Report Options", options);
+        if(selection == 1){
+            System.out.println("Enter date (dd/mm/yyyy format) :");
+            String inputDate = scanner.next();
+            LocalDate formattedDate = LocalDate.parse(inputDate, dateFormatter);
+            MacDonalds.generateRevenueReport(formattedDate);
+        }else if(selection == 2){
+            System.out.println("Enter month :");
+            Month month = Month.of(scanner.nextInt());
+            System.out.println("Enter year: ");
+            int year = scanner.nextInt();
+            MacDonalds.generateRevenueReport(month, year);
+        }else if(selection == 3){
+            System.out.println("Enter year: ");
+            int year = scanner.nextInt();
+            MacDonalds.generateRevenueReport(year);
+        }else{
+            forStupid();
+        }
     }
 
     public static void RestaurantInformation(){
-        return;
+        String[] options = {"Memberships", "Restaurant Details"};
+        int selection = getUserInput("Info Options", options);
+        if(selection == 1){
+            System.out.println("\nMembership Details");
+            System.out.println("=====================");
+            ArrayList<Membership> allMemberships = MacDonalds.getAllMemberships();
+            if(allMemberships.size() == 0) System.out.println("No memberships currently");
+            for(int i = 0;i<allMemberships.size();i++){
+                System.out.println((i+1) + ". " + allMemberships.get(i).getType() + " | Discount: " + allMemberships.get(i).getDiscount()*100 + "%");
+            }
+        }else if(selection == 2){
+            System.out.println("\nRestaurant Details");
+            System.out.println("=====================");
+            System.out.println("Restaurant Name: " + MacDonalds.getRestaurantName());
+            System.out.println("Restaurant Location: " + MacDonalds.getLocation());
+            System.out.println("Opening Time: " + MacDonalds.getOpeningTime().toString());
+            System.out.println("Closing Time: " + MacDonalds.getClosingTime().toString());
+            System.out.println("Number of Staff: " + MacDonalds.getAllStaff().size());
+            System.out.println("Number of Tables: " + MacDonalds.getAllTables().size());
+        }else{
+            forStupid();
+        }
     }
+
 
     public static void TableSelection(){
         String[] options= {"View All Tables", "Add a Table"};
         int selection = getUserInput("Table Options", options);
         if(selection == 1){
+            System.out.println("\nViewing All Tables");
+            System.out.println("=====================");
             for(Table t: MacDonalds.getAllTables()){
                 t.printTable();
             }
         }else if(selection == 2){
+            System.out.println("\nCreating new table");
+            System.out.println("=====================");
             System.out.println("Enter capacity of table: ");
             int capacity = scanner.nextInt();
             MacDonalds.addTable(capacity);
+        }else{
+            forStupid();
         }
     }
 
@@ -196,10 +243,10 @@ public class MacDonaldsApp {
     public static void viewAllReservations(){
         ArrayList<Reservation> allReservations = MacDonalds.getAllReservations();
         if(allReservations.size() == 0){
-            System.out.println("\nNo current reservations\n");
+            System.out.println("\nNo current reservations");
         }else{
-            for(int i = 0;i<allReservations.size();i++){
-                allReservations.get(i).printReservation();
+            for (Reservation allReservation : allReservations) {
+                allReservation.printReservation();
             }
         }
         System.out.println();
@@ -235,7 +282,7 @@ public class MacDonaldsApp {
     }
 
     public static void makeReservation(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y");
+
         Customer currCustomer = createCustomerIfNotExist();
         System.out.println("How many people are coming?");
         int numberOfPax = scanner.nextInt();
@@ -243,7 +290,7 @@ public class MacDonaldsApp {
         String reservationDate = scanner.next();
 
         //error checking here to make sure valid reservation date
-        LocalDate date = LocalDate.parse(reservationDate, formatter);
+        LocalDate date = LocalDate.parse(reservationDate, dateFormatter);
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
         ArrayList<LocalTime> timings = new ArrayList<LocalTime>(availableTimings.keySet());
@@ -334,7 +381,7 @@ public class MacDonaldsApp {
         }
     }
 
-    private static Category[] allCategories = Category.values();
+
     public static MenuItem generateAlaCarte( boolean isPromo, int id){
         MenuItem newItem;
         float price = (float) (id*0.25 + 0.1);
