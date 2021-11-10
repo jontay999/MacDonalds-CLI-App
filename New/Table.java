@@ -24,7 +24,9 @@ public class Table implements MakeReservation {
         clearOldReservations();
         Reservation newReservation = new Reservation(customer, timing, numberOfPax);
         this.reservations.add(newReservation);
-        System.out.println("Reservation for " + numberOfPax + " at " + timing.format(formatter) + "made by " + customer.getName() + " at Table " + getTableNumber() +  ".");
+        System.out.println("\nReservation confirmed!\n");
+        printReservationConfirmation(customer.getContact(), timing);
+//        System.out.println("\nReservation for " + numberOfPax + " at " + timing.format(formatter) + " made by " + customer.getName() + " at Table " + getTableNumber() +  ".");
     };
 
     public void removeReservation(int contact, LocalDateTime timing){
@@ -50,7 +52,7 @@ public class Table implements MakeReservation {
                 System.out.println("======================");
                 System.out.println("Customer name: " + r.getCustomer().getName());
                 System.out.println("Customer contact: " +r.getCustomer().getContact());
-                System.out.println("Number of Pax" + r.getNumberOfPax());
+                System.out.println("Number of Pax: " + r.getNumberOfPax());
                 System.out.println("Reservation Timing: " + r.getReservationDateTime());
                 return;
             }
