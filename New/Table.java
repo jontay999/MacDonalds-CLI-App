@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  @since 2021-11-09
   * */
 
-public class Table implements MakeReservation {
+public class Table implements ManageReservation {
 
     /**
      * All the reservations contained within the table
@@ -77,7 +77,7 @@ public class Table implements MakeReservation {
      * */
     public void removeReservation(int contact, LocalDateTime timing){
         clearOldReservations();
-        this.reservations.removeIf(r -> r.getCustomer().getContact() == contact && r.getReservationDateTime() == timing);
+        this.reservations.removeIf(r -> r.getCustomer().getContact() == contact && r.getReservationDateTime().isEqual(timing));
     }
 
     /**
@@ -89,7 +89,7 @@ public class Table implements MakeReservation {
     public Reservation checkReservation(int contact, LocalDateTime timing){
         clearOldReservations();
         for(Reservation r: reservations){
-            if(r.getCustomer().getContact() == contact && r.getReservationDateTime() == timing){
+            if(r.getCustomer().getContact() == contact && r.getReservationDateTime().isEqual(timing)){
                 return r;
             }
         }

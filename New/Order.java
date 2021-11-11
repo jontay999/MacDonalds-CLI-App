@@ -3,14 +3,32 @@ package MacDonalds.New;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ Represents an Order made by a Customer at a Restaurant
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public class Order implements OrderManager {
-    private Customer customer;
-    private Staff staff;
-    private LocalDateTime dateTime;
-    private int tableId;
-    private ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
-    private ArrayList<Set> setList = new ArrayList<Set>();
-    private float totalPrice=0;
+    /**
+     * Customer that made the Order
+     * */
+    Customer customer;
+    /**
+     * Staff that took the Order
+     * */
+    Staff staff;
+    /**
+     * The DateTime that the Order was made
+     * */
+    LocalDateTime dateTime;
+
+
+    int tableId;
+    ArrayList<Alacarte> alacarteList = new ArrayList<>();
+    ArrayList<Set> setList = new ArrayList<Set>();
+    float totalPrice=0;
 
     Order(Customer customer, Staff staff, int tableId){
         this.customer=customer;
