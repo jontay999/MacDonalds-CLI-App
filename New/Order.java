@@ -27,7 +27,7 @@ public class Order implements OrderManager {
 
     Table table;
     ArrayList<Alacarte> alacarteList = new ArrayList<>();
-    ArrayList<Set> setList = new ArrayList<Set>();
+    ArrayList<Set> setList = new ArrayList<>();
     float totalPrice=0;
 
     Order(Customer customer, Staff staff, Table table){
@@ -45,23 +45,15 @@ public class Order implements OrderManager {
         this.customer = customer;
     }
 
-    public Staff getStaff() {
-        return this.staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
-
     public LocalDateTime getDateTime() {
         return this.dateTime;
     }
 
-    public Table getTableId() {
+    public Table getTable() {
         return this.table;
     }
 
-    public void setTableId(Table table) {
+    public void setTable(Table table) {
         this.table = table;
     }
 
@@ -111,36 +103,21 @@ public class Order implements OrderManager {
         float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
         System.out.printf("\nMembership discount: (S$%.2f)",discountApplied);
         System.out.printf("\nGST Applied(inclusive): (S$%.2f)",(0.07*(this.totalPrice-discountApplied)));
-        System.out.printf("\nFinal Price to Pay: S$%.2f\n",(float)(this.totalPrice-discountApplied));
+        System.out.printf("\nFinal Price to Pay: S$%.2f\n",(this.totalPrice-discountApplied));
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 
     public ArrayList<Alacarte> getAlacarteList() {
         return this.alacarteList;
     }
 
-    public void setAlacarteList(ArrayList<Alacarte> alacarteList) {
-        this.alacarteList = alacarteList;
-    }
 
     public ArrayList<Set> getSetList() {
         return this.setList;
-    }
-
-    public void setSetList(ArrayList<Set> setList) {
-        this.setList = setList;
     }
 
     public float getTotalPrice() {
         return this.totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    
 }
