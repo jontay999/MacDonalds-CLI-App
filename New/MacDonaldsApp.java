@@ -414,7 +414,7 @@ public class MacDonaldsApp {
         Customer currCustomer = createCustomerIfNotExist();
         System.out.println("How many people are coming?");
         int numberOfPax = scanner.nextInt();
-        System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yy)");
+        System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yyyy)");
         String reservationDate = scanner.next();
 
         //error checking here to make sure valid reservation date

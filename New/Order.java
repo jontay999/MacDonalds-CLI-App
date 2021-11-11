@@ -14,22 +14,42 @@ public class Order implements OrderManager, ItemManager {
     /**
      * Customer that made the Order
      * */
-    Customer customer;
+    private Customer customer;
     /**
      * Staff that took the Order
      * */
-    Staff staff;
+    private Staff staff;
     /**
      * The DateTime that the Order was made
      * */
-    LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
+    /**
+     * Table at which Order was made
+     * */
+    private Table table;
 
-    Table table;
-    ArrayList<Alacarte> alacarteList = new ArrayList<>();
-    ArrayList<Set> setList = new ArrayList<>();
-    float totalPrice=0;
+    /**
+     * All Ala Carte Items in the Order
+     * */
+    private ArrayList<Alacarte> alacarteList = new ArrayList<>();
 
+    /**
+     * All Set Items in the Order
+     * */
+    private ArrayList<Set> setList = new ArrayList<>();
+
+    /**
+     * Total Price of all items in the Order
+     * */
+    float totalPrice = 0;
+
+    /**
+     * Create an Order
+     * @param customer Customer making the Order
+     * @param staff Staff that took the Order
+     * @param table Table that Order was made at
+     * */
     Order(Customer customer, Staff staff, Table table){
         this.customer=customer;
         this.staff=staff;
@@ -37,44 +57,51 @@ public class Order implements OrderManager, ItemManager {
         this.table=table;
     }
 
-    public Customer getCustomer() {
-        return this.customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
+    /**
+     * Get the Date Time at which Order was made
+     * */
     public LocalDateTime getDateTime() {
         return this.dateTime;
     }
 
-    public Table getTable() {
-        return this.table;
-    }
-
-    public void setTable(Table table) {
-        this.table = table;
-    }
-
+    /**
+     * Add Set Item to the Order Set List
+     * @param item Set Item to be added
+     * */
     public void addItem(Set item) {
         this.setList.add(item);
         this.totalPrice+=item.getPrice();
     }
 
+    /**
+     * Add Ala Carte Item to the Order Ala Carte List
+     * @param item Set Item to be added
+     * */
     public void addItem(Alacarte item) {
         this.alacarteList.add(item);
         this.totalPrice+=item.getPrice();
     }
 
+    /**
+     * Remove Ala Carte Item to the Order Set List
+     * @param item Ala Carte Item to be added
+     * */
     public void removeItem(Alacarte item){
         this.alacarteList.remove(item);
     }
 
+    /**
+     * Remove Set Item to the Order Set List
+     * @param item Set Item to be added
+     * */
     public void removeItem(Set item){
         this.setList.remove(item);
     }
 
+    /**
+     * View Order Details
+     * Print items ordered by Ala Carte and Set Categories
+     * */
     public void viewOrder() {
         System.out.println("\nAlacarte Items");
         System.out.println("------------------------");
@@ -92,6 +119,9 @@ public class Order implements OrderManager, ItemManager {
         }
     }
 
+    /**
+     * Print Details of Order Invoice with Final Price
+     * */
     public void printOrderInvoice() {
         System.out.printf("\n------------------Table %d------------------\n\n",this.table.getTableNumber());
         this.viewOrder();
@@ -102,13 +132,17 @@ public class Order implements OrderManager, ItemManager {
         System.out.printf("\nFinal Price to Pay: S$%.2f\n",(this.totalPrice-discountApplied));
     }
 
+    /**
+     * Returns the List of Ala Carte Items in the Order
+     * */
     public ArrayList<Alacarte> getAlacarteList() {
         return this.alacarteList;
     }
 
-
+    /**
+     * Returns the List of Set Items in the Order
+     * */
     public ArrayList<Set> getSetList() {
         return this.setList;
     }
-
 }
