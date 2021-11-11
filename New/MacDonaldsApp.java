@@ -247,6 +247,7 @@ public class MacDonaldsApp {
         String [] options = {"Alacarte","Set","Done"};
         int selection = getUserInput("SELECT ITEM TYPE TO REMOVE", options);
         System.out.print("Enter index of item to remove: ");
+        // 
         int toRemove = scanner.nextInt();
         order.removeItem(toRemove-1, selection==1?false:true);
     }
@@ -254,7 +255,7 @@ public class MacDonaldsApp {
     public static void newOrder(){
         Table table = getTableSelection();
         Customer customer = table.getOccupyingCustomer();
-        Order order = new Order(customer,MacDonalds.getAllStaff().get(2),table.getTableNumber());
+        Order order = new Order(customer,MacDonalds.getAllStaff().get(2),table);
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};
         while(true){
@@ -519,7 +520,7 @@ public class MacDonaldsApp {
             float discount = (float)scanner.nextDouble();
             Alacarte a = new PromoAlacarte(newPromoItem.getName(),newPromoItem.getDescription(),newPromoItem.getPrice(),discount,newPromoItem.getCategory());
             a.setPrice(discount);
-            a.setName(a.getName()+"(PROMO)");
+            a.setName(a.getName()+"*PROMO*");
             menu.addItem(a);
         }
         if(selection==4){
@@ -529,7 +530,7 @@ public class MacDonaldsApp {
             scanner.next();
             Set a = new PromoSet(newPromoItem.getName(),newPromoItem.getDescription(),discount);
             a.setPrice(discount);
-            a.setName(a.getName()+"(PROMO)");
+            a.setName(a.getName()+"*PROMO*");
             menu.addItem(a);
         }
     }
@@ -554,9 +555,7 @@ public class MacDonaldsApp {
             float price = (float)scanner.nextDouble();
             item.setPrice(price);
         }
-        else if(selection==3){
-            menu.getAlacarteList().remove(item);
-        }
+        else if(selection==3)menu.removeItem(item);
     }
 
     public static void editItem(Menu menu,Set item){
@@ -567,9 +566,7 @@ public class MacDonaldsApp {
             String name = scanner.nextLine();
             item.setName(name);
         }
-        else if(selection==2){
-            menu.getSetList().remove(item);
-        }
+        else if(selection==2)menu.removeItem(item);
     }
 
     public static int getUserInput(String title, String []options){

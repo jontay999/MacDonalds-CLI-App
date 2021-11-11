@@ -25,16 +25,16 @@ public class Order implements OrderManager {
     LocalDateTime dateTime;
 
 
-    int tableId;
+    Table table;
     ArrayList<Alacarte> alacarteList = new ArrayList<>();
     ArrayList<Set> setList = new ArrayList<Set>();
     float totalPrice=0;
 
-    Order(Customer customer, Staff staff, int tableId){
+    Order(Customer customer, Staff staff, Table table){
         this.customer=customer;
         this.staff=staff;
         this.dateTime=LocalDateTime.now();
-        this.tableId=tableId;
+        this.table=table;
     }
 
     public Customer getCustomer() {
@@ -57,12 +57,12 @@ public class Order implements OrderManager {
         return this.dateTime;
     }
 
-    public int getTableId() {
-        return this.tableId;
+    public Table getTableId() {
+        return this.table;
     }
 
-    public void setTableId(int tableId) {
-        this.tableId = tableId;
+    public void setTableId(Table table) {
+        this.table = table;
     }
 
     public void addItem(Set item) {
@@ -105,7 +105,7 @@ public class Order implements OrderManager {
     }
 
     public void printOrderInvoice() {
-        System.out.printf("\n------------------Table %d------------------\n\n",this.tableId);
+        System.out.printf("\n------------------Table %d------------------\n\n",this.table.getTableNumber());
         this.viewOrder();
         System.out.printf("\nTotal price: S$%.2f",this.totalPrice);
         float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());

@@ -61,17 +61,12 @@ public class Menu implements MenuControl {
         this.alacarteList.add(item);        
     }
 
-    /**
-     * Remove Item from Menu
-     * @param index Index of either Set/AlaCarte to Remove
-     * @param isSet Boolean to check which ArrayList to remove item from
-     * */
-    public void removeItem(int index, boolean isSet) {
-        if(isSet){
-            setList.remove(index);
-        }
-        else{
-            alacarteList.remove(index);}
+    public void removeItem(Alacarte item){
+        this.alacarteList.remove(item);
+    }
+
+    public void removeItem(Set item){
+        this.setList.remove(item);
     }
 
     /**
