@@ -1,6 +1,5 @@
 package MacDonalds.New;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,11 +7,11 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
 public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
     private static final Category[] allCategories = Category.values();
-    private static final DecimalFormat df = new DecimalFormat("0.00");
     public static Restaurant MacDonalds;
 
     public static void main(String[] args){
@@ -237,6 +236,7 @@ public class MacDonaldsApp {
         else if(selection==3) viewOrder();
         else if(selection==4) closeOrder();
         else if(selection==5) return;
+        else forStupid();
     }
 
     public static void editOrder(){
@@ -425,7 +425,7 @@ public class MacDonaldsApp {
         }
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
-        ArrayList<LocalTime> timings = new ArrayList<LocalTime>(availableTimings.keySet());
+        ArrayList<LocalTime> timings = new ArrayList<>(availableTimings.keySet());
         Collections.sort(timings);
         if(timings.size() == 0){
             System.out.println("Sorry, there are no available tables!");
@@ -479,8 +479,7 @@ public class MacDonaldsApp {
         String [] cats = {"Main Course", "Drinks", "Dessert", "Sides"};
         int selection = getUserInput("Select item category", cats);
         Category category=allCategories[selection-1];
-        Alacarte item = new Alacarte(name,description,price,category);
-        return item;
+        return new Alacarte(name,description,price,category);
     }
 
     public static Set createSet(){
@@ -595,44 +594,4 @@ public class MacDonaldsApp {
         }
     }
 
-    public static void addMenus(){
-        for(int j = 0;j<2;j++){
-            Menu newMenu = new Menu("Menu" + (j+1));
-            PromoSet newPromoSet = new PromoSet("PromoSet " + (j*2+1), "Description of promoset "+(j+1), (float)((j+1)*6.35));
-            Set newSet = new Set("PromoSet " + (j*2+2), "Description of promoset "+(j+1));
-            for(int i = 0;i<10;i++){
-                if(i<5){
-                    Alacarte newItem = (Alacarte) generateAlaCarte(false, i+j*5);
-                    newMenu.addItem(newItem);
-                    if(i%2 == 1){
-                        newSet.addAlacarteItem(newItem);
-                    }
-                }else{
-                    Alacarte newItem = (Alacarte) generateAlaCarte(true, i+j*5);
-                    newMenu.addItem(newItem);
-                    if(i%2 == 1){
-                        newPromoSet.addAlacarteItem(newItem);
-                    }
-                }
-            }
-            newMenu.addItem(newPromoSet);
-            newMenu.addItem(newSet);
-            MacDonalds.addMenu(newMenu);
-        }
-    }
-
-
-    public static MenuItem generateAlaCarte( boolean isPromo, int id){
-        MenuItem newItem;
-        float price = (float) (id*0.25 + 0.1);
-        float finalPrice = (float) (price*0.75);
-        Category category = allCategories[id%allCategories.length];
-        String description = "This is the description for item id number " + id;
-        if(isPromo){
-            newItem = new PromoAlacarte("PromoAlacarte " + id,description,price, finalPrice, category);
-        }else{
-            newItem = new Alacarte("Normal Alacarte " + id, description, price, category);
-        }
-        return newItem;
-    }
 }

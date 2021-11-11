@@ -1,7 +1,13 @@
 package MacDonalds.New;
 
-
+/**
+ * Represents Genders of Staff
+ * */
 enum Gender {MALE, FEMALE}
+
+/**
+ * Represents JobTitles of Staff
+ * */
 enum JobTitle {EMPLOYEE, MANAGER}
 
 /**
