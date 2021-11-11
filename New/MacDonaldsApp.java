@@ -254,7 +254,7 @@ public class MacDonaldsApp {
     public static void newOrder(){
         Table table = getTableSelection();
         Customer customer = table.getOccupyingCustomer();
-        Order order = new Order(customer,MacDonalds.allStaff.get(2),table.getTableNumber());
+        Order order = new Order(customer,MacDonalds.getAllStaff().get(2),table.getTableNumber());
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};
         while(true){
