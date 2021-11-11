@@ -27,7 +27,7 @@ public class Order implements OrderManager, ItemManager {
 
     Table table;
     ArrayList<Alacarte> alacarteList = new ArrayList<>();
-    ArrayList<Set> setList = new ArrayList<Set>();
+    ArrayList<Set> setList = new ArrayList<>();
     float totalPrice=0;
 
     Order(Customer customer, Staff staff, Table table){
@@ -49,11 +49,11 @@ public class Order implements OrderManager, ItemManager {
         return this.dateTime;
     }
 
-    public Table getTableId() {
+    public Table getTable() {
         return this.table;
     }
 
-    public void setTableId(Table table) {
+    public void setTable(Table table) {
         this.table = table;
     }
 
@@ -99,14 +99,16 @@ public class Order implements OrderManager, ItemManager {
         float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
         System.out.printf("\nMembership discount: (S$%.2f)",discountApplied);
         System.out.printf("\nGST Applied(inclusive): (S$%.2f)",(0.07*(this.totalPrice-discountApplied)));
-        System.out.printf("\nFinal Price to Pay: S$%.2f\n",(float)(this.totalPrice-discountApplied));
+        System.out.printf("\nFinal Price to Pay: S$%.2f\n",(this.totalPrice-discountApplied));
     }
 
     public ArrayList<Alacarte> getAlacarteList() {
         return this.alacarteList;
     }
 
+
     public ArrayList<Set> getSetList() {
         return this.setList;
-    }    
+    }
+
 }
