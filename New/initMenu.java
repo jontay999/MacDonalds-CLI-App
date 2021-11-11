@@ -1,10 +1,10 @@
 package MacDonalds.New;
 
-public class initMenu {
+public class InitMenu {
     Menu menu0 = new Menu("Singapore Menu");
     Menu menu2 = new Menu("Breakfast Menu");
 
-    initMenu(){
+    InitMenu(){
         //add alacarte items
         Alacarte item1 = new Alacarte("Chicken McCrispy", "Chicken McCrispy® (6pc) comes with 3 thighs and 3 drumsticks.", (float)8.70, Category.MAIN_COURSE);
         Alacarte item2 = new Alacarte("Plant McVeggie", "Freshly made with veggies and plant based meat suitable for vegetarians.", (float)8.70, Category.MAIN_COURSE);

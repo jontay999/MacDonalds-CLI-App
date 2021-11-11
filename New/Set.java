@@ -50,7 +50,7 @@ public class Set extends MenuItem {
      * Return all the Items in the Set as a String
      * */
     public String getSetItems(){
-        String itemNames="(";
+        String itemNames=" (";
         for(Alacarte item:alacarteItems){
             itemNames+=item.getName();
             itemNames+=", ";
@@ -58,5 +58,10 @@ public class Set extends MenuItem {
         itemNames=itemNames.substring(0, itemNames.length()-2);
         itemNames+=")";
         return itemNames;
+    }
+
+    public ArrayList<Alacarte> getAlacarteItems(){
+        return this.alacarteItems;
+
     }
 }

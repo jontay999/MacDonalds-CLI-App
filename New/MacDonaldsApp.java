@@ -42,7 +42,9 @@ public class MacDonaldsApp {
         }
 
         //add menu,
-        MacDonalds.addMenu(new initMenu().getMenu(0));
+        MacDonalds.addMenu(new InitMenu().getMenu(0));
+
+        // Restaurant MacDonalds = new InitRestaurant().getRestaurant();
 
         //Starting Options
         System.out.println("Hello! Welcome to " + MacDonalds.getRestaurantName() + " at " + MacDonalds.getLocation());
@@ -456,17 +458,24 @@ public class MacDonaldsApp {
     }
 
     public static void createNewMenu(){
-        System.out.print("Enter a name: ");
-        String name = scanner.next();
+        System.out.println("Enter a name: ");
+        String name = scanner.nextLine();
         Menu menu = new Menu(name);
+        MacDonalds.addMenu(menu);
         String [] options = {"Alacarte","Set","Done"};
         while(true){
             int selection = getUserInput("SELECT TYPE OF ITEM TO ADD", options);
-            if(selection==1)menu.addItem(createItem());
-            else if(selection==2)menu.addItem(createSet());
+            if(selection==1){
+                Alacarte item = createItem();
+                menu.addItem(item);
+            }
+            else if(selection==2){
+                Set item2 = createSet();
+                menu.addItem(item2);
+            }
             else if(selection==3)break;
         }
-        MacDonalds.addMenu(menu);
+        
     }
 
     public static Alacarte createItem(){
@@ -479,20 +488,24 @@ public class MacDonaldsApp {
         String [] cats = {"Main Course", "Drinks", "Dessert", "Sides"};
         int selection = getUserInput("Select item category", cats);
         Category category=allCategories[selection-1];
-        return new Alacarte(name,description,price,category);
+        Alacarte item = new Alacarte(name,description,price,category);
+        return item;
     }
 
     public static Set createSet(){
         System.out.println("Enter Set name: ");
         String name=scanner.nextLine();
-        Set set = new Set(name,name);
+        Set newSet = new Set(name,name);
         String [] options = {"Add Item","Done"};
         while(true){
             int selection = getUserInput("OPTIONS", options);
-            if(selection==1)set.addAlacarteItem(createItem());
+            if(selection==1){
+                Alacarte item = createItem();
+                newSet.addAlacarteItem(item);
+            }
             else if(selection==2)break;
         }
-        return set;
+        return newSet;
     }
 
     public static void pickMenu(){
@@ -525,17 +538,20 @@ public class MacDonaldsApp {
             float discount = (float)scanner.nextDouble();
             Alacarte a = new PromoAlacarte(newPromoItem.getName(),newPromoItem.getDescription(),newPromoItem.getPrice(),discount,newPromoItem.getCategory());
             a.setPrice(discount);
-            a.setName(a.getName()+"*PROMO*");
+            a.setName(a.getName()+" *PROMO*");
             menu.addItem(a);
         }
         if(selection==4){
             Set newPromoItem = createSet();
             System.out.println("Enter a discounted price:");
             float discount = (float)scanner.nextDouble();
-            scanner.next();
             Set a = new PromoSet(newPromoItem.getName(),newPromoItem.getDescription(),discount);
+            ArrayList<Alacarte> items = newPromoItem.getAlacarteItems();
+            for(Alacarte x:items){
+                a.addAlacarteItem(x);
+            }
             a.setPrice(discount);
-            a.setName(a.getName()+"*PROMO*");
+            a.setName(a.getName()+" *PROMO*");
             menu.addItem(a);
         }
     }

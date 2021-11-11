@@ -133,7 +133,7 @@ public class Menu implements MenuControl {
         for(int i=0;i<getMaxAlacarteLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         for(int i=0;i<getMaxAlacarteLength()+5;i++)System.out.print(" ");
-        System.out.println("MacDonalds " +this.name+" menu ");
+        System.out.println("MacDonalds " +this.name);
         for(int i=0;i<getMaxAlacarteLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         System.out.println("\nAla-Carte Items:");
