@@ -310,6 +310,7 @@ public class MacDonaldsApp {
         int i=0;
         for(Menu menu:menus){
             options[i]=menu.getName();
+            i++;
         }
         int selection = getUserInput("SELECT MENU", options);
         return menus.get(selection-1);
@@ -361,7 +362,6 @@ public class MacDonaldsApp {
             }
         }
         System.out.println();
-
     }
 
     public static void RemoveReservations(){
