@@ -365,7 +365,7 @@ public class MacDonaldsApp {
     public static void RemoveReservations(){
         System.out.println("\nEnter contact number of Customer: ");
         int contact = scanner.nextInt();
-        System.out.println("Enter Date of Reservation (in format DD/MM/YYYY) : ");
+        System.out.println("Enter Date of Reservation (in format dd/mm/yyyy) : ");
         String date = scanner.next();
         LocalDate formattedDate = LocalDate.parse(date, dateFormatter);
         System.out.println("Enter time of Reservation (in format HH:MM) : ");
