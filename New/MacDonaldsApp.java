@@ -247,9 +247,15 @@ public class MacDonaldsApp {
         String [] options = {"Alacarte","Set","Done"};
         int selection = getUserInput("SELECT ITEM TYPE TO REMOVE", options);
         System.out.print("Enter index of item to remove: ");
-        // 
         int toRemove = scanner.nextInt();
-        order.removeItem(toRemove-1, selection==1?false:true);
+        if(selection==1){
+            Alacarte toRemoveItem = order.getAlacarteList().get(toRemove-1);
+            order.removeItem(toRemoveItem);
+        }
+        else if(selection==2){
+            Set toRemoveSetItem = order.getSetList().get(toRemove-1);
+            order.removeItem(toRemoveSetItem);
+        }
     }
 
     public static void newOrder(){

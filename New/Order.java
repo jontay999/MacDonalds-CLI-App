@@ -10,7 +10,7 @@ import java.util.ArrayList;
  @since 2021-11-09
   * */
 
-public class Order implements OrderManager {
+public class Order implements OrderManager, ItemManager {
     /**
      * Customer that made the Order
      * */
@@ -45,14 +45,6 @@ public class Order implements OrderManager {
         this.customer = customer;
     }
 
-    public Staff getStaff() {
-        return this.staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
-
     public LocalDateTime getDateTime() {
         return this.dateTime;
     }
@@ -75,16 +67,12 @@ public class Order implements OrderManager {
         this.totalPrice+=item.getPrice();
     }
 
-    public void removeItem(int index, boolean isSet) {
-        if(isSet){
-            Set toRemoveItem = setList.get(index);
-            this.totalPrice-=toRemoveItem.getPrice();
-            setList.remove(index);
-        }
-        else{
-            Alacarte toRemoveItem = alacarteList.get(index);
-            this.totalPrice-=toRemoveItem.getPrice();
-            alacarteList.remove(index);}
+    public void removeItem(Alacarte item){
+        this.alacarteList.remove(item);
+    }
+
+    public void removeItem(Set item){
+        this.setList.remove(item);
     }
 
     public void viewOrder() {
@@ -114,33 +102,11 @@ public class Order implements OrderManager {
         System.out.printf("\nFinal Price to Pay: S$%.2f\n",(float)(this.totalPrice-discountApplied));
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public ArrayList<Alacarte> getAlacarteList() {
         return this.alacarteList;
     }
 
-    public void setAlacarteList(ArrayList<Alacarte> alacarteList) {
-        this.alacarteList = alacarteList;
-    }
-
     public ArrayList<Set> getSetList() {
         return this.setList;
-    }
-
-    public void setSetList(ArrayList<Set> setList) {
-        this.setList = setList;
-    }
-
-    public float getTotalPrice() {
-        return this.totalPrice;
-    }
-
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    
+    }    
 }
