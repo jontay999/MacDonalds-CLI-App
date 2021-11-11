@@ -2,6 +2,13 @@ package MacDonalds.New;
 
 import java.util.ArrayList;
 
+/**
+ Represents a Set Item of the Menu
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public class Set extends MenuItem {
     private ArrayList<Alacarte> alacarteItems = new ArrayList<Alacarte>();
 

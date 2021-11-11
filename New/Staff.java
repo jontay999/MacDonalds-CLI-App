@@ -1,7 +1,15 @@
 package MacDonalds.New;
 
+
 enum Gender {MALE, FEMALE};
 enum JobTitle {EMPLOYEE, MANAGER}
+
+/**
+ Represents a Staff working at the Restaurant
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
 
 public class Staff extends Person {
     private Gender gender;

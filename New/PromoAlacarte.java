@@ -1,5 +1,14 @@
 package MacDonalds.New;
 
+
+
+/**
+ Represents a PromoAlaCarte Item
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public class PromoAlacarte extends Alacarte implements Promotion{
     private float finalPrice;
 

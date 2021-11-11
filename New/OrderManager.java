@@ -1,9 +1,16 @@
 package MacDonalds.New;
 
+/**
+ Represents an interface for managing Orders
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public interface OrderManager {
-    public void addItem(Set item);
-    public void addItem(Alacarte item);
-    public void removeItem(int index, boolean isSet);
-    public void viewOrder();
-    public void printOrderInvoice();
+    void addItem(Set item);
+    void addItem(Alacarte item);
+    void removeItem(int index, boolean isSet);
+    void viewOrder();
+    void printOrderInvoice();
 }

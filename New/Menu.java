@@ -1,35 +1,71 @@
 package MacDonalds.New;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ Represents a Menu of the Restaurant
+ @author Dhruval Kothari
+ @version 1.0
+ @since 2021-11-09
+  * */
 public class Menu implements MenuControl {
-    private ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
-    private ArrayList<Set> setList = new ArrayList<Set>();
-    private String name;
-    private LocalDateTime lastUpdated;
 
+    /**
+     * All AlaCarte Items available in the Menu
+     * */
+    private ArrayList<Alacarte> alacarteList = new ArrayList<>();
+
+    /**
+     * All Set Items available in the Menu
+     * */
+    private ArrayList<Set> setList = new ArrayList<>();
+
+    /**
+     * The name of the Menu
+     * */
+    private String name;
+
+
+    /**
+     * Creates the Menu
+     * @param name The name of the Menu
+     * */
     Menu(String name){
         this.name=name;
-        this.lastUpdated=LocalDateTime.now();
     }
 
+    /**
+     * Returns all the AlaCarte items in the Menu
+     * */
     public ArrayList<Alacarte> getAlacarteList(){
         return this.alacarteList;
     }
 
+    /**
+     * Return all the Set items in the Menu
+     * */
     public ArrayList<Set> getSetList(){
         return this.setList;
     }
 
-
+    /**
+     * Add a Set Item into the Menu
+     * */
     public void addItem(Set item) {
         this.setList.add(item);        
     }
 
+    /**
+     * Add an AlaCarte Item into the Menu
+     * */
     public void addItem(Alacarte item) {
         this.alacarteList.add(item);        
     }
 
+    /**
+     * Remove Item from Menu
+     * @param index Index of either Set/AlaCarte to Remove
+     * @param isSet Boolean to check which ArrayList to remove item from
+     * */
     public void removeItem(int index, boolean isSet) {
         if(isSet){
             setList.remove(index);
@@ -38,22 +74,23 @@ public class Menu implements MenuControl {
             alacarteList.remove(index);}
     }
 
+    /**
+     * Return Name of Menu
+     * */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Set the name of the menu
+     * */
     public void setName(String name) {
         this.name = name;
     }
 
-    public LocalDateTime getLastUpdated() {
-        return this.lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
+    /**
+     * Get Maximum String Length of an Ala Carte Item
+     * */
     public int getMaxAlacarteLength(){
         int maxItemLength = 0;
         for(MenuItem item:alacarteList){
@@ -62,6 +99,9 @@ public class Menu implements MenuControl {
         return maxItemLength;
     }
 
+    /**
+     * Get Maximum String Length of a Set Item
+     * */
     public int getMaxSetLength(){
         int maxItemLength = 0;
         for(Set item:setList){
@@ -71,6 +111,10 @@ public class Menu implements MenuControl {
     }
 
 
+    /**
+     * Print the Menu by Category
+     * @param category Category to be printed
+     * */
     public void printMenu(Category category){
         int count=0;
         for(Alacarte item:alacarteList){
@@ -86,7 +130,10 @@ public class Menu implements MenuControl {
         }
         if(count%2!=0)System.out.println("");
     }
-        
+
+    /**
+     * Print everything on the Menu
+     * */
     public void printMenu(){
         for(int i=0;i<getMaxAlacarteLength()*2+30;i++)System.out.print("-");
         System.out.println("");

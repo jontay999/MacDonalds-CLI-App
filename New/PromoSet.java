@@ -1,5 +1,12 @@
 package MacDonalds.New;
 
+/**
+ Represents a PromoSet Item
+ @author Jonathan Tay
+ @version 1.0
+ @since 2021-11-09
+  * */
+
 public class PromoSet extends Set implements Promotion {
     private float finalPrice;
 
