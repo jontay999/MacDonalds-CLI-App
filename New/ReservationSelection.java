@@ -3,6 +3,7 @@ package MacDonalds.New;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 public class ReservationSelection {
     Restaurant MacDonalds=MacDonaldsApp.MacDonalds;
     Scanner scanner = MacDonaldsApp.scanner;
-
+    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
     ReservationSelection(){
         String[] options = {"View Reservations", "Make a Reservation","Remove Reservations","Back"};
         int selection = HelperFunctions.getUserInput("RESERVATION OPTIONS", options);
@@ -59,7 +60,7 @@ public class ReservationSelection {
             return;
         }
         for(int i = 0;i<timings.size();i++){
-            System.out.println((i+1) + ". " + timings.get(i).toString());
+            System.out.println((i+1) + ". " + dtf.format(timings.get(i)));
         }
         System.out.println("Select a time slot: ");
         int selection = scanner.nextInt();

@@ -33,7 +33,7 @@ public class SeatCustomerSelection {
         Customer currCustomer = MacDonalds.findCustomer(contact);
         if(currCustomer == null){
             System.out.println("Enter name: ");
-            String name = scanner.next();
+            String name = scanner.nextLine();
             Membership customerMembership = null;
             ArrayList<Membership> allMemberships = MacDonalds.getAllMemberships();
             if(allMemberships.size() > 0){
