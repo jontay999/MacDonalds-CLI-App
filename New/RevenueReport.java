@@ -48,11 +48,11 @@ public abstract class RevenueReport {
         int totalVolume = 0;
 
         for(Order o: orders){
-            for(Alacarte a: o.alacarteList){
+            for(Alacarte a: o.getAlacarteList()){
                 totalSales += a.getPrice();
                 totalVolume++;
             }
-            for(Set s: o.setList){
+            for(Set s: o.getSetList()){
                 totalSales += s.getPrice();
                 totalVolume++;
             }
@@ -66,11 +66,11 @@ public abstract class RevenueReport {
      * */
     void populateDictionary(){
         for(Order o:orders){
-            for(MenuItem item: o.alacarteList){
+            for(MenuItem item: o.getAlacarteList()){
                 int count = alacarteDict.containsKey(item) ? alacarteDict.get(item) : 0;
                 alacarteDict.put(item,count+1);
             }
-            for(MenuItem item: o.setList){
+            for(MenuItem item: o.getSetList()){
                 int count = setDict.containsKey(item) ? setDict.get(item) : 0;
                 setDict.put(item,count+1);
             }

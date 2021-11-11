@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Order implements OrderManager {
-    Customer customer;
-    Staff staff;
-    LocalDateTime dateTime;
-    int tableId;
-    ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
-    ArrayList<Set> setList = new ArrayList<Set>();
-    float totalPrice=0;
+    private Customer customer;
+    private Staff staff;
+    private LocalDateTime dateTime;
+    private int tableId;
+    private ArrayList<Alacarte> alacarteList = new ArrayList<Alacarte>();
+    private ArrayList<Set> setList = new ArrayList<Set>();
+    private float totalPrice=0;
 
     Order(Customer customer, Staff staff, int tableId){
         this.customer=customer;
@@ -89,7 +89,40 @@ public class Order implements OrderManager {
     public void printOrderInvoice() {
         System.out.printf("\n------------------Table %d------------------\n\n",this.tableId);
         this.viewOrder();
-        System.out.printf("\nTotal price: S$%.2f\nThank you and hope to see you again!\n",this.totalPrice);
+        System.out.printf("\nTotal price: S$%.2f",this.totalPrice);
+        float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
+        System.out.printf("\nMembership discount: (S$%.2f)",discountApplied);
+        System.out.printf("\nGST Applied(inclusive): (S$%.2f)",(0.07*(this.totalPrice-discountApplied)));
+        System.out.printf("\nFinal Price to Pay: S$%.2f\n",(float)(this.totalPrice-discountApplied));
     }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public ArrayList<Alacarte> getAlacarteList() {
+        return this.alacarteList;
+    }
+
+    public void setAlacarteList(ArrayList<Alacarte> alacarteList) {
+        this.alacarteList = alacarteList;
+    }
+
+    public ArrayList<Set> getSetList() {
+        return this.setList;
+    }
+
+    public void setSetList(ArrayList<Set> setList) {
+        this.setList = setList;
+    }
+
+    public float getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     
 }

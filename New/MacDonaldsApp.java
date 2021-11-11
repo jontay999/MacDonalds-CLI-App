@@ -286,6 +286,7 @@ public class MacDonaldsApp {
         ArrayList<Table> tables = MacDonalds.getOccupiedTables();
         String [] options = new String[tables.size()];
         int i=0;
+        if(tables.size()==0)return null;
         for(Table table:tables){
             options[i]="Table "+table.getTableNumber();
             i++;
@@ -430,7 +431,6 @@ public class MacDonaldsApp {
         System.out.print("Enter a name: ");
         String name = scanner.next();
         Menu menu = new Menu(name);
-        System.out.println(name);
         String [] options = {"Alacarte","Set","Done"};
         while(true){
             int selection = getUserInput("SELECT TYPE OF ITEM TO ADD", options);
@@ -442,11 +442,11 @@ public class MacDonaldsApp {
     }
 
     public static Alacarte createItem(){
-        System.out.print("Enter item name: ");
-        String name=scanner.next();
-        System.out.print("Enter item description: ");
-        String description=scanner.next();
-        System.out.print("Enter item price: ");
+        System.out.println("Enter item name: ");
+        String name=scanner.nextLine();
+        System.out.println("Enter item description: ");
+        String description=scanner.nextLine();
+        System.out.println("Enter item price: ");
         float price=(float)scanner.nextDouble();
         String [] cats = {"Main Course", "Drinks", "Dessert", "Sides"};
         int selection = getUserInput("Select item category", cats);
@@ -456,8 +456,8 @@ public class MacDonaldsApp {
     }
 
     public static Set createSet(){
-        System.out.print("Enter Set name: ");
-        String name=scanner.next();
+        System.out.println("Enter Set name: ");
+        String name=scanner.nextLine();
         Set set = new Set(name,name);
         String [] options = {"Add Item","Done"};
         while(true){
@@ -505,6 +505,7 @@ public class MacDonaldsApp {
             Set newPromoItem = createSet();
             System.out.println("Enter a discounted price:");
             float discount = (float)scanner.nextDouble();
+            scanner.next();
             Set a = new PromoSet(newPromoItem.getName(),newPromoItem.getDescription(),discount);
             a.setPrice(discount);
             a.setName(a.getName()+"(PROMO)");
@@ -515,16 +516,16 @@ public class MacDonaldsApp {
     public static void editMenu(Menu menu){
         String [] options = {"Alacarte","Set"};
         int selection = getUserInput("TYPE OF ITEM TO EDIT", options);
-        if(selection==1)editItem(getAlacarteItemInput(menu));
-        else if(selection==2)editItem(getSetItemInput(menu));
+        if(selection==1)editItem(menu,getAlacarteItemInput(menu));
+        else if(selection==2)editItem(menu,getSetItemInput(menu));
     }
 
-    public static void editItem(Alacarte item){
-        String [] options = {"Name","Price"};
+    public static void editItem(Menu menu,Alacarte item){
+        String [] options = {"Name","Price","Remove Item"};
         int selection = getUserInput("FIELD TO EDIT", options);
         if(selection==1){
             System.out.println("Enter new name:");
-            String name = scanner.next();
+            String name = scanner.nextLine();
             item.setName(name);
         }
         else if(selection==2){
@@ -532,12 +533,22 @@ public class MacDonaldsApp {
             float price = (float)scanner.nextDouble();
             item.setPrice(price);
         }
+        else if(selection==3){
+            menu.getAlacarteList().remove(item);
+        }
     }
 
-    public static void editItem(Set item){
-        System.out.println("Enter new name:");
-        String name = scanner.nextLine();
-        item.setName(name);
+    public static void editItem(Menu menu,Set item){
+        String [] options = {"Name","Remove Item"};
+        int selection = getUserInput("FIELD TO EDIT", options);
+        if(selection==1){
+            System.out.println("Enter new name:");
+            String name = scanner.nextLine();
+            item.setName(name);
+        }
+        else if(selection==2){
+            menu.getSetList().remove(item);
+        }
     }
 
     public static int getUserInput(String title, String []options){
@@ -550,6 +561,7 @@ public class MacDonaldsApp {
         while(true){
             System.out.print("\nEnter your selection: ");
             int selection = scanner.nextInt();
+            scanner.nextLine();
             if(selection<=count){
                 return selection;
             }
