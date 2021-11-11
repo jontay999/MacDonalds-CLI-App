@@ -367,7 +367,7 @@ public class MacDonaldsApp {
     public static void RemoveReservations(){
         System.out.println("\nEnter contact number of Customer: ");
         int contact = scanner.nextInt();
-        System.out.println("Enter Date of Reservation (in format DD/MM/YYYY) : ");
+        System.out.println("Enter Date of Reservation (in format dd/mm/yyyy) : ");
         String date = scanner.next();
         LocalDate formattedDate = LocalDate.parse(date, dateFormatter);
         System.out.println("Enter time of Reservation (in format HH:MM) : ");
@@ -416,7 +416,7 @@ public class MacDonaldsApp {
         Customer currCustomer = createCustomerIfNotExist();
         System.out.println("How many people are coming?");
         int numberOfPax = scanner.nextInt();
-        System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yy)");
+        System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yyyy)");
         String reservationDate = scanner.next();
 
         //error checking here to make sure valid reservation date
