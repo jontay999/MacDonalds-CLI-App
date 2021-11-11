@@ -330,11 +330,13 @@ public class MacDonaldsApp {
     }
 
     public static void ReservationSelection(){
-        String[] options = {"View Reservations", "Make a Reservation","Back"};
+        String[] options = {"View Reservations", "Make a Reservation","Remove Reservations","Back"};
         int selection = getUserInput("RESERVATION OPTIONS", options);
         if(selection == 1) viewAllReservations();
         else if(selection == 2) makeReservation();
-        else if(selection==3) return;
+        else if(selection==3) RemoveReservations();
+        else if(selection == 4) return;
+        else forStupid();
     }
 
     public static void viewAllReservations(){
@@ -350,6 +352,25 @@ public class MacDonaldsApp {
         }
         System.out.println();
 
+    }
+
+    public static void RemoveReservations(){
+        System.out.println("\nEnter contact number of Customer: ");
+        int contact = scanner.nextInt();
+        System.out.println("Enter Date of Reservation (in format DD/MM/YYYY) : ");
+        String date = scanner.next();
+        LocalDate formattedDate = LocalDate.parse(date, dateFormatter);
+        System.out.println("Enter time of Reservation (in format HH:MM) : ");
+        String time = scanner.next();
+        LocalTime formattedTime = LocalTime.parse(time);
+        LocalDateTime formattedDateTime = LocalDateTime.of(formattedDate, formattedTime);
+        Table reservationTable = MacDonalds.findReservationTable(contact, formattedDateTime);
+        if(reservationTable != null){
+            reservationTable.removeReservation(contact, formattedDateTime);
+            System.out.println("\nReservation successfully removed");
+        }else{
+            System.out.println("\nNo reservation could be found for that contact number at that time.");
+        }
     }
 
     public static Customer createCustomerIfNotExist(){

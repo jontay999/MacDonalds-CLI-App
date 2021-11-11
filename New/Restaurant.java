@@ -320,7 +320,18 @@ public class Restaurant implements ManageRevenueReport{
         return occupiedTables;
     }
 
-
+    /**
+     * Finds the Table that was reserved
+     * @param contact Contact Number of customer that made the reservation
+     * @param timing Reservation DateTime
+     * */
+    public Table findReservationTable(int contact, LocalDateTime timing){
+        for(Table t: allTables){
+            Reservation r = t.checkReservation(contact, timing);
+            if(r != null) return t;
+        }
+        return null;
+    }
 
     /**
      * Generate and Print Yearly Revenue Report
