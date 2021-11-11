@@ -72,7 +72,7 @@ public class Table implements MakeReservation {
     /**
      * Find the reservation of the customer with the contact number made at the timing
      * Remove the reservation from Table's ArrayList of reservations
-     * @param contact The Contact of the Customer making the reservation on the table
+     * @param contact The Contact of the Customer that made the Reservation
      * @param timing The DateTime of Reservation
      * */
     public void removeReservation(int contact, LocalDateTime timing){
