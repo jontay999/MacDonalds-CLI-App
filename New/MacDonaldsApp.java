@@ -8,11 +8,9 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
 public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
-    public static DateTimeFormatter datetimeFormat = DateTimeFormatter.ofPattern("d/M/y H:m");
     private static final Category[] allCategories = Category.values();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     public static Restaurant MacDonalds;
@@ -248,7 +246,7 @@ public class MacDonaldsApp {
         order.viewOrder();
         String [] options = {"Alacarte","Set","Done"};
         int selection = getUserInput("SELECT ITEM TYPE TO REMOVE", options);
-        System.out.print("Enter index of item to edit: ");
+        System.out.print("Enter index of item to remove: ");
         int toRemove = scanner.nextInt();
         order.removeItem(toRemove-1, selection==1?false:true);
     }
@@ -263,9 +261,10 @@ public class MacDonaldsApp {
             int selection = getUserInput("SELECT ITEM TYPE", options);
             if(selection==1)order.addItem(getAlacarteItemInput(menu));
             else if(selection==2)order.addItem(getSetItemInput(menu));
-            else if(selection==3) break;
+            else  if(selection==3) break;
         }
         customer.setOrder(order);
+        MacDonalds.addOrder(order);
     }
 
     public static void viewOrder(){
@@ -331,25 +330,11 @@ public class MacDonaldsApp {
     }
 
     public static void ReservationSelection(){
-        String[] options = {"View Reservations", "Make a Reservation","Remove Reservations", "Back"};
+        String[] options = {"View Reservations", "Make a Reservation","Back"};
         int selection = getUserInput("RESERVATION OPTIONS", options);
         if(selection == 1) viewAllReservations();
         else if(selection == 2) makeReservation();
-        else if(selection==3) RemoveReservations();
-        else if(selection == 4) return;
-        else forStupid();
-    }
-
-    public static void RemoveReservations(){
-        System.out.println("Remove Reservation Options");
-        System.out.println("======================");
-        System.out.println("Enter contact number of Customer: ");
-        int contact = scanner.nextInt();
-        System.out.println("Enter Date Time of Reservation (in format DD/MM/YYYY HH:MM): ");
-        String datetime = scanner.next();
-        LocalDateTime formattedDateTime = LocalDateTime.parse(datetime, datetimeFormat);
-
-
+        else if(selection==3) return;
     }
 
     public static void viewAllReservations(){
@@ -430,8 +415,6 @@ public class MacDonaldsApp {
             Table reservedTable = availableTimings.get(reservationTime).get(0);
             LocalDateTime reservationDateTime = LocalDateTime.of(date, reservationTime);
             reservedTable.makeReservation(currCustomer, reservationDateTime, numberOfPax);
-        }else{
-            forStupid();
         }
     }
 
@@ -497,10 +480,36 @@ public class MacDonaldsApp {
         Menu chosenMenu = menuList.get(chosenMenuNum-1);
         String chosenMenuName = chosenMenu.getName();
 
-        String[] options2 = {"Display Menu","Edit Menu"};
+        String[] options2 = {"Display Menu","Edit Menu","Add Item"};
         int selection2 = getUserInput(chosenMenuName.toUpperCase()+" OPTIONS", options2);
         if(selection2==1)chosenMenu.printMenu();
         if(selection2==2)editMenu(chosenMenu);
+        if(selection2==3)addToMenu(chosenMenu);
+    }
+
+    public static void addToMenu(Menu menu){
+        String [] options = {"Alacarte","Set","Promo Alacarte","Promo Set"};
+        int selection = getUserInput("SELECT TYPE TO ADD", options);
+        if(selection==1)menu.addItem(createItem());
+        if(selection==2)menu.addItem(createSet());
+        if(selection==3){
+            Alacarte newPromoItem = createItem();
+            System.out.print("Enter a discounted price: ");
+            float discount = (float)scanner.nextDouble();
+            Alacarte a = new PromoAlacarte(newPromoItem.getName(),newPromoItem.getDescription(),newPromoItem.getPrice(),discount,newPromoItem.getCategory());
+            a.setPrice(discount);
+            a.setName(a.getName()+"(PROMO)");
+            menu.addItem(a);
+        }
+        if(selection==4){
+            Set newPromoItem = createSet();
+            System.out.println("Enter a discounted price:");
+            float discount = (float)scanner.nextDouble();
+            Set a = new PromoSet(newPromoItem.getName(),newPromoItem.getDescription(),discount);
+            a.setPrice(discount);
+            a.setName(a.getName()+"(PROMO)");
+            menu.addItem(a);
+        }
     }
 
     public static void editMenu(Menu menu){
@@ -548,5 +557,46 @@ public class MacDonaldsApp {
                 System.out.println("Invalid selection! Please try again.");
             }
         }
+    }
+
+    public static void addMenus(){
+        for(int j = 0;j<2;j++){
+            Menu newMenu = new Menu("Menu" + (j+1));
+            PromoSet newPromoSet = new PromoSet("PromoSet " + (j*2+1), "Description of promoset "+(j+1), (float)((j+1)*6.35));
+            Set newSet = new Set("PromoSet " + (j*2+2), "Description of promoset "+(j+1));
+            for(int i = 0;i<10;i++){
+                if(i<5){
+                    Alacarte newItem = (Alacarte) generateAlaCarte(false, i+j*5);
+                    newMenu.addItem(newItem);
+                    if(i%2 == 1){
+                        newSet.addAlacarteItem(newItem);
+                    }
+                }else{
+                    Alacarte newItem = (Alacarte) generateAlaCarte(true, i+j*5);
+                    newMenu.addItem(newItem);
+                    if(i%2 == 1){
+                        newPromoSet.addAlacarteItem(newItem);
+                    }
+                }
+            }
+            newMenu.addItem(newPromoSet);
+            newMenu.addItem(newSet);
+            MacDonalds.addMenu(newMenu);
+        }
+    }
+
+
+    public static MenuItem generateAlaCarte( boolean isPromo, int id){
+        MenuItem newItem;
+        float price = (float) (id*0.25 + 0.1);
+        float finalPrice = (float) (price*0.75);
+        Category category = allCategories[id%allCategories.length];
+        String description = "This is the description for item id number " + id;
+        if(isPromo){
+            newItem = new PromoAlacarte("PromoAlacarte " + id,description,price, finalPrice, category);
+        }else{
+            newItem = new Alacarte("Normal Alacarte " + id, description, price, category);
+        }
+        return newItem;
     }
 }
