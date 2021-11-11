@@ -10,23 +10,35 @@ import java.util.ArrayList;
   * */
 
 public class Set extends MenuItem {
-    private ArrayList<Alacarte> alacarteItems = new ArrayList<Alacarte>();
+    /**
+     * All the Ala Carte Items in the Set
+     * */
+    private ArrayList<Alacarte> alacarteItems = new ArrayList<>();
 
+    /**
+     * Create a Set Item
+     * @param name Name of the Set
+     * @param description Description of the Set
+     * */
     Set(String name,String description){
         setName(name);
         setDescription(description);
     }
 
-    public ArrayList<Alacarte> getAlacarteItem(){
-        return this.alacarteItems;
-    }
-
+    /**
+     * Add an Ala Carte Item into the Set
+     * @param item Ala Carte Item to be added
+     * */
     public void addAlacarteItem(Alacarte item){
         alacarteItems.add(item);
         float prevPrice = this.getPrice();
         this.setPrice(prevPrice+item.getPrice());
     }
 
+    /**
+     * Remove Ala Carte Item from the Set
+     * @param index Index of Item to be removed
+     * */
     public void removeAlacarteItem(int index){
         this.alacarteItems.remove(index);
         float itemPrice = alacarteItems.get(index).getPrice();
@@ -34,6 +46,9 @@ public class Set extends MenuItem {
         this.setPrice(prevPrice-itemPrice);
     }
 
+    /**
+     * Return all the Items in the Set as a String
+     * */
     public String getSetItems(){
         String itemNames="(";
         for(Alacarte item:alacarteItems){

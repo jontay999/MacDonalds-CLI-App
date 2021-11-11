@@ -8,5 +8,8 @@ package MacDonalds.New;
   * */
 
 public interface Promotion {
-    public float getDiscount();
+    /**
+     * Get the Discount of the Promotional Item
+     * */
+    float getDiscount();
 }

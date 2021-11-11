@@ -8,9 +8,28 @@ package MacDonalds.New;
   * */
 
 public interface OrderManager {
+    /**
+     * Add a Set Item into the Order
+     * */
     void addItem(Set item);
+
+    /**
+     * Add an AlaCarte Item into Order
+     * */
     void addItem(Alacarte item);
+
+    /**
+     * Remove either a Set or Ala Carte Item from order
+     * */
     void removeItem(int index, boolean isSet);
+
+    /**
+     * Print a Summary of the Order and its Items
+     * */
     void viewOrder();
+
+    /**
+     * Print the Order Invoice including the price
+     * */
     void printOrderInvoice();
 }

@@ -1,7 +1,7 @@
 package MacDonalds.New;
 
 
-enum Gender {MALE, FEMALE};
+enum Gender {MALE, FEMALE}
 enum JobTitle {EMPLOYEE, MANAGER}
 
 /**
@@ -12,31 +12,45 @@ enum JobTitle {EMPLOYEE, MANAGER}
   * */
 
 public class Staff extends Person {
+    /**
+     * Gender of the Staff
+     * */
     private Gender gender;
+
+    /**
+     * Job Title of the Staff
+     * */
     private JobTitle jobTitle;
 
+    /**
+     * Create the Staff working in the Restaurant
+     * @param name Name of the Staff
+     * @param gender Gender of the Staff
+     * @param jobTitle Job Title of the Staff
+     * */
     Staff(String name, Gender gender, JobTitle jobTitle){
         this.name=name;
         this.gender=gender;
         this.jobTitle=jobTitle;
     }
 
+    /**
+     * Return the Gender of the Staff
+     * */
     public Gender getGender() {
         return this.gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
+    /**
+     * Return the Job Title of the Staff
+     * */
     public JobTitle getJobTitle() {
         return this.jobTitle;
     }
 
-    public void setJobTitle(JobTitle jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
+    /**
+     * Print Staff Details
+     * */
     public void printStaffInfo(){
         System.out.println("Name: "+ getName() + " | Gender: " + getGender() + " | Job Title: " + getJobTitle());
     }

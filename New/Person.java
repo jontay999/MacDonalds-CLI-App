@@ -8,20 +8,23 @@ package MacDonalds.New;
   * */
 
 public abstract class Person {
+    /**
+     * The name of the Person
+     * */
     String name;
-    int id;
 
+    /**
+     * Get the name of the Person
+     * */
     public String getName(){
         return this.name;
     }
+
+    /**
+     * Set the name of the Person
+     * */
     public void setName(String name){
         this.name=name;
-    }
-    public int getId(){
-        return this.id;
-    }
-    public void setId(int id){
-        this.id=id;
     }
 }
 

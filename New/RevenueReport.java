@@ -59,7 +59,7 @@ public abstract class RevenueReport {
         }
         setSalesVolume(totalVolume);
         setRevenue(totalSales);
-    };
+    }
 
     /**
      * Populate the Hashmaps of Set Items and AlaCarte Items from all the orders in the period
