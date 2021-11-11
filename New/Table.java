@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  @since 2021-11-09
   * */
 
-public class Table implements MakeReservation {
+public class Table implements ManageReservation {
 
     /**
      * All the reservations contained within the table

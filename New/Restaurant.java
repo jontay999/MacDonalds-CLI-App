@@ -257,7 +257,6 @@ public class Restaurant implements ManageRevenueReport{
      * @param date Date of desired Reservation
      * @param numPax Number of Persons for the Reservation
      * */
-    //returns map with key localtime, and value: arraylist of tables that are free during that time
     public Map<LocalTime, ArrayList<Table>> getAvailableTimings(LocalDate date, int numPax){
         Map<LocalTime, ArrayList<Table>> availableTimes = getPossibleTimings(numPax);
         for(int i = 0;i<allTables.size();i++){
