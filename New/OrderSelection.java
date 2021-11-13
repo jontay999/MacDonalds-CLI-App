@@ -25,7 +25,15 @@ public class OrderSelection {
             return;
         }
         Customer customer = table.getOccupyingCustomer();
-        Order order = new Order(customer,MacDonalds.getAllStaff().get(2),table);
+        
+        String [] staffOptions = new String[MacDonalds.getAllStaff().size()];
+        int count=0;
+        for(Staff staff:MacDonalds.getAllStaff()){
+            staffOptions[count]=staff.getName();
+            count++;
+        }
+        int staffSelection = HelperFunctions.getUserInput("SELECT STAFF", staffOptions);
+        Order order = new Order(customer,MacDonalds.getAllStaff().get(staffSelection-1),table);
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};
         while(true){

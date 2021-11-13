@@ -123,7 +123,8 @@ public class Order implements OrderManager, ItemManager {
      * Print Details of Order Invoice with Final Price
      * */
     public void printOrderInvoice() {
-        System.out.printf("\n------------------Table %d------------------\n\n",this.table.getTableNumber());
+        System.out.printf("\n------------------Table %d------------------\n",this.table.getTableNumber());
+        System.out.println("\nStaff assigned: "+this.staff.getName());
         this.viewOrder();
         System.out.printf("\nTotal price: S$%.2f",this.totalPrice);
         float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
