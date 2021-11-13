@@ -32,7 +32,7 @@ public class OrderSelection {
             staffOptions[count]=staff.getName();
             count++;
         }
-        int staffSelection = HelperFunctions.getUserInput("SELECT STAFF", staffOptions);
+        int staffSelection = HelperFunctions.getUserInput("SELECT STAFF TAKING ORDER", staffOptions);
         Order order = new Order(customer,MacDonalds.getAllStaff().get(staffSelection-1),table);
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};

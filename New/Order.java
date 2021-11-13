@@ -1,6 +1,7 @@
 package MacDonalds.New;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -106,16 +107,22 @@ public class Order implements OrderManager, ItemManager {
         System.out.println("\nAlacarte Items");
         System.out.println("------------------------");
         int i=1;
-        for(Alacarte item:alacarteList){
-            System.out.printf("%d. %s: S$%.2f\n",i,item.getName(),item.getPrice());
-            i++;
+        if(alacarteList.size()==0)System.out.println("There are no items to show.");
+        else{
+            for(Alacarte item:alacarteList){
+                System.out.printf("%d. %s: S$%.2f\n",i,item.getName(),item.getPrice());
+                i++;
+            }
         }
         System.out.println("\nSet Items");
         System.out.println("------------------------");
         int j=1;
-        for(Set item:setList){
-            System.out.printf("%d. %s: S$%.2f\n",j,item.getName(),item.getPrice());
-            j++;
+        if(setList.size()==0)System.out.println("There are no items to show.");
+        else{
+            for(Set item:setList){
+                System.out.printf("%d. %s: S$%.2f\n",j,item.getName(),item.getPrice());
+                j++;
+            }
         }
     }
 
@@ -125,6 +132,7 @@ public class Order implements OrderManager, ItemManager {
     public void printOrderInvoice() {
         System.out.printf("\n------------------Table %d------------------\n",this.table.getTableNumber());
         System.out.println("\nStaff assigned: "+this.staff.getName());
+        System.out.println("Order placed at: "+this.getDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:MM:SS")));
         this.viewOrder();
         System.out.printf("\nTotal price: S$%.2f",this.totalPrice);
         float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
