@@ -20,6 +20,10 @@ public class OrderSelection {
 
     public void newOrder(){
         Table table = getTableSelection();
+        if(table == null){
+            System.out.println("There are no occupied tables to take orders from now!");
+            return;
+        }
         Customer customer = table.getOccupyingCustomer();
         Order order = new Order(customer,MacDonalds.getAllStaff().get(2),table);
         Menu menu = getMenuSelection();

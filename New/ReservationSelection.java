@@ -80,10 +80,23 @@ public class ReservationSelection {
         int contact = scanner.nextInt();
         System.out.println("Enter Date of Reservation (in format dd/mm/yyyy) : ");
         String date = scanner.next();
-        LocalDate formattedDate = LocalDate.parse(date, MacDonaldsApp.dateFormatter);
+        LocalDate formattedDate;
+        LocalTime formattedTime;
+        try{
+            formattedDate = LocalDate.parse(date, MacDonaldsApp.dateFormatter);
+        }catch(Exception e){
+            System.out.println("Please enter a valid date!");
+            return;
+        }
+
         System.out.println("Enter time of Reservation (in format HH:MM) : ");
         String time = scanner.next();
-        LocalTime formattedTime = LocalTime.parse(time);
+        try{
+            formattedTime = LocalTime.parse(time);
+        } catch(Exception e){
+            System.out.println("Please enter a valid time!");
+            return;
+        }
         LocalDateTime formattedDateTime = LocalDateTime.of(formattedDate, formattedTime);
         Table reservationTable = MacDonalds.findReservationTable(contact, formattedDateTime);
         if(reservationTable != null){

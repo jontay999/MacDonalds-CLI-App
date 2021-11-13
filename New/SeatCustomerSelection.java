@@ -30,6 +30,7 @@ public class SeatCustomerSelection {
     public static Customer createCustomerIfNotExist(Restaurant MacDonalds){
         System.out.println("Enter contact number: ");
         int contact = scanner.nextInt();
+        scanner.nextLine();
         Customer currCustomer = MacDonalds.findCustomer(contact);
         if(currCustomer == null){
             System.out.println("Enter name: ");
