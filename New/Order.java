@@ -89,6 +89,7 @@ public class Order implements OrderManager, ItemManager {
      * */
     public void removeItem(Alacarte item){
         this.alacarteList.remove(item);
+        this.totalPrice-=item.getPrice();
     }
 
     /**
@@ -97,6 +98,7 @@ public class Order implements OrderManager, ItemManager {
      * */
     public void removeItem(Set item){
         this.setList.remove(item);
+        this.totalPrice-=item.getPrice();
     }
 
     /**

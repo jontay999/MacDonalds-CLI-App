@@ -34,6 +34,12 @@ public class OrderSelection {
         }
         int staffSelection = HelperFunctions.getUserInput("SELECT STAFF TAKING ORDER", staffOptions);
         Order order = new Order(customer,MacDonalds.getAllStaff().get(staffSelection-1),table);
+        addToOrder(order);
+        customer.setOrder(order);
+        MacDonalds.addOrder(order);
+    }
+
+    public void addToOrder(Order order){
         Menu menu = getMenuSelection();
         String [] options = {"Alacarte","Set","Done"};
         while(true){
@@ -42,33 +48,41 @@ public class OrderSelection {
             else if(selection==2)order.addItem(getSetItemInput(menu));
             else  if(selection==3) break;
         }
-        customer.setOrder(order);
-        MacDonalds.addOrder(order);
     }
 
     public void editOrder(){
         Table table = getTableSelection();
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
-        order.viewOrder();
-        String [] options = {"Alacarte","Set","Done"};
-        int selection = HelperFunctions.getUserInput("SELECT ITEM TYPE TO REMOVE", options);
-        System.out.print("Enter index of item to remove: ");
-        int toRemove;
-        try{
-            toRemove = scanner.nextInt();
-        }catch(Exception e){
-            HelperFunctions.forStupid();
-            return;
+
+        String [] addRemoveSelection = {"Add Item","Remove Item"};
+        int selection1 = HelperFunctions.getUserInput("SELECT ACTION", addRemoveSelection);
+        if(selection1==1){
+            addToOrder(order);
         }
-        if(selection==1){
-            Alacarte toRemoveItem = order.getAlacarteList().get(toRemove-1);
-            order.removeItem(toRemoveItem);
+        else if(selection1==2){
+            order.viewOrder();
+            String [] options = {"Alacarte","Set","Done"};
+            int selection = HelperFunctions.getUserInput("SELECT ITEM TYPE TO REMOVE", options);
+            System.out.print("Enter index of item to remove: ");
+            int toRemove;
+            try{
+                toRemove = scanner.nextInt();
+            }catch(Exception e){
+                HelperFunctions.forStupid();
+                return;
+            }
+            if(selection==1){
+                Alacarte toRemoveItem = order.getAlacarteList().get(toRemove-1);
+                order.removeItem(toRemoveItem);
+            }
+            else if(selection==2){
+                Set toRemoveSetItem = order.getSetList().get(toRemove-1);
+                order.removeItem(toRemoveSetItem);
+            }
         }
-        else if(selection==2){
-            Set toRemoveSetItem = order.getSetList().get(toRemove-1);
-            order.removeItem(toRemoveSetItem);
-        }
+
+        
     }
 
     public void viewOrder(){
