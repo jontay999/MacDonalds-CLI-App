@@ -41,7 +41,13 @@ public class ReservationSelection {
 
         Customer currCustomer = SeatCustomerSelection.createCustomerIfNotExist(MacDonalds);
         System.out.println("How many people are coming?");
-        int numberOfPax = scanner.nextInt();
+        int numberOfPax;
+        try{
+            numberOfPax =scanner.nextInt();
+        } catch(Exception e){
+            HelperFunctions.forStupid();
+            return;
+        }
         System.out.println("\nWhat date would " + currCustomer.getName() + " like to reserve? (Enter in format dd/mm/yyyy)");
         String reservationDate = scanner.next();
 
@@ -64,7 +70,16 @@ public class ReservationSelection {
             System.out.println((i+1) + ". " + tf.format(timings.get(i)));
         }
         System.out.println("Select a time slot: ");
-        int selection = scanner.nextInt();
+
+        int selection;
+
+        try{
+            selection= scanner.nextInt();
+        }catch(Exception e){
+            HelperFunctions.forStupid();
+            return;
+        }
+
 
         //assume they r not dumb
         if(selection > 0 && selection <= timings.size()){
@@ -78,7 +93,14 @@ public class ReservationSelection {
 
     public void RemoveReservations(){
         System.out.println("\nEnter contact number of Customer: ");
-        int contact = scanner.nextInt();
+        int contact;
+        try{
+            contact = scanner.nextInt();
+        }catch (Exception e){
+            HelperFunctions.forStupid();
+            return;
+        }
+
         System.out.println("Enter Date of Reservation (in format dd/mm/yyyy) : ");
         String date = scanner.next();
         LocalDate formattedDate;

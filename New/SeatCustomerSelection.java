@@ -15,7 +15,13 @@ public class SeatCustomerSelection {
         //no reservation
         if(assignedTable == null){
             System.out.println("How many people are there dining in?");
-            int numPax = scanner.nextInt();
+            int numPax;
+            try{
+                numPax = scanner.nextInt();
+            }catch(Exception e){
+                HelperFunctions.forStupid();
+                return;
+            }
             assignedTable = MacDonalds.getAvailableTable(numPax);
             if(assignedTable == null){
                 System.out.println("Sorry! There are no available tables at this time. Come back later!\n");
@@ -28,9 +34,18 @@ public class SeatCustomerSelection {
     }
 
     public static Customer createCustomerIfNotExist(Restaurant MacDonalds){
-        System.out.println("Enter contact number: ");
-        int contact = scanner.nextInt();
-        scanner.nextLine();
+        int contact;
+        while(true) {
+            System.out.println("Enter contact number: ");
+            try {
+                contact = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } catch (Exception e) {
+                HelperFunctions.forStupid();
+                scanner.nextLine();
+            }
+        }
         Customer currCustomer = MacDonalds.findCustomer(contact);
         if(currCustomer == null){
             System.out.println("Enter name: ");
