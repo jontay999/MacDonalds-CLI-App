@@ -62,7 +62,7 @@ public class RestaurantSelection {
             }
         }else if(selection == 2){
             System.out.println("Enter new staff name: ");
-            String name = scanner.next();
+            String name = scanner.nextLine();
             Gender gender;
             JobTitle jobTitle;
             System.out.println("Select staff gender");
