@@ -59,8 +59,9 @@ public class ReservationSelection {
             System.out.println("Sorry, there are no available tables!");
             return;
         }
+        DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm");
         for(int i = 0;i<timings.size();i++){
-            System.out.println((i+1) + ". " + dtf.format(timings.get(i)));
+            System.out.println((i+1) + ". " + tf.format(timings.get(i)));
         }
         System.out.println("Select a time slot: ");
         int selection = scanner.nextInt();

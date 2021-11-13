@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MacDonaldsApp {
     public static Scanner scanner = new Scanner(System.in);
-    public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/y");
+    public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static final Category[] allCategories = Category.values();
     public static Restaurant MacDonalds;
 

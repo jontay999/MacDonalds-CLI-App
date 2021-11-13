@@ -46,7 +46,13 @@ public class OrderSelection {
         String [] options = {"Alacarte","Set","Done"};
         int selection = HelperFunctions.getUserInput("SELECT ITEM TYPE TO REMOVE", options);
         System.out.print("Enter index of item to remove: ");
-        int toRemove = scanner.nextInt();
+        int toRemove;
+        try{
+            toRemove = scanner.nextInt();
+        }catch(Exception e){
+            HelperFunctions.forStupid();
+            return;
+        }
         if(selection==1){
             Alacarte toRemoveItem = order.getAlacarteList().get(toRemove-1);
             order.removeItem(toRemoveItem);
