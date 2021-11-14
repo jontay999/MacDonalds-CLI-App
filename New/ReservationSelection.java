@@ -60,7 +60,9 @@ public class ReservationSelection {
         Map<LocalTime, ArrayList<Table>> availableTimings = MacDonalds.getAvailableTimings(date, numberOfPax);
 
         ArrayList<LocalTime> timings = new ArrayList<>(availableTimings.keySet());
+        timings.removeIf(t -> LocalDateTime.of(date, t).isBefore(LocalDateTime.now()));
         Collections.sort(timings);
+
         if(timings.size() == 0){
             System.out.println("Sorry, there are no available tables!");
             return;

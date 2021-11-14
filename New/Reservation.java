@@ -65,7 +65,7 @@ public class Reservation implements Comparable<Object>{
      * */
     public void printReservation(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-        System.out.print("Reservation Date Time: " + getReservationDateTime().toString() + " | Customer Name: " + customer.getName() + " | Customer Contact Number: " + customer.getContact() + " | Pax: " + numberOfPax + "\n");
+        System.out.print("Reservation Date Time: " + dtf.format(getReservationDateTime()) + " | Customer Name: " + customer.getName() + " | Customer Contact Number: " + customer.getContact() + " | Pax: " + numberOfPax + "\n");
     }
 
     /**
