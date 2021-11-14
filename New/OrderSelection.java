@@ -66,8 +66,16 @@ public class OrderSelection {
 
     public void editOrder(){
         Table table = getTableSelection();
+        if(table == null){
+            System.out.println("There are no occupied tables to take orders from now!");
+            return;
+        }
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
+        if(order==null){
+            System.out.println("\nPlease create an order first!");
+            return;
+        }
 
         String [] addRemoveSelection = {"Add Item","Remove Item"};
         int selection1 = HelperFunctions.getUserInput("SELECT ACTION", addRemoveSelection);
@@ -101,15 +109,31 @@ public class OrderSelection {
 
     public void viewOrder(){
         Table table = getTableSelection();
+        if(table == null){
+            System.out.println("There are no occupied tables to take orders from now!");
+            return;
+        }
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
+        if(order==null){
+            System.out.println("\nNo order created yet!");
+            return;
+        }
         order.viewOrder();
     }
 
     public void closeOrder(){
         Table table = getTableSelection();
+        if(table == null){
+            System.out.println("There are no occupied tables to take orders from now!");
+            return;
+        }
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
+        if(order==null){
+            System.out.println("\nNo order created yet!");
+            return;
+        }
         order.printOrderInvoice();
         table.setOccupyingCustomer(null);
     }
