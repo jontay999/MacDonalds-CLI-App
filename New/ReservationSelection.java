@@ -14,12 +14,13 @@ public class ReservationSelection {
     Scanner scanner = MacDonaldsApp.scanner;
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
     ReservationSelection(){
-        String[] options = {"View Reservations", "Make a Reservation","Remove Reservations","Back"};
+        String[] options = {"View Reservations", "Make a Reservation","Remove Reservations", "Check Reservation", "Back"};
         int selection = HelperFunctions.getUserInput("RESERVATION OPTIONS", options);
         if(selection == 1) viewAllReservations();
         else if(selection == 2) makeReservation();
         else if(selection==3) RemoveReservations();
-        else if(selection == 4) return;
+        else if(selection == 4) CheckReservation();
+        else if(selection == 5) return;
         else HelperFunctions.forStupid();
     }
 
@@ -90,6 +91,53 @@ public class ReservationSelection {
             Table reservedTable = availableTimings.get(reservationTime).get(0);
             LocalDateTime reservationDateTime = LocalDateTime.of(date, reservationTime);
             reservedTable.makeReservation(currCustomer, reservationDateTime, numberOfPax);
+        }
+    }
+
+    public void CheckReservation(){
+        System.out.println("\nChecking Reservation\n");
+        System.out.println("Enter contact number of Customer: ");
+        int contact;
+        try{
+            contact = scanner.nextInt();
+        }catch (Exception e){
+            HelperFunctions.forStupid();
+            return;
+        }
+
+        System.out.println("Enter Date of Reservation (in format dd/mm/yyyy) : ");
+        String date = scanner.next();
+        LocalDate formattedDate;
+        LocalTime formattedTime;
+        try{
+            formattedDate = LocalDate.parse(date, MacDonaldsApp.dateFormatter);
+        }catch(Exception e){
+            System.out.println("Please enter a valid date!");
+            return;
+        }
+
+        System.out.println("Enter time of Reservation (in format HH:MM) : ");
+        String time = scanner.next();
+        try{
+            formattedTime = LocalTime.parse(time);
+        } catch(Exception e){
+            System.out.println("Please enter a valid time!");
+            return;
+        }
+        LocalDateTime formattedDateTime = LocalDateTime.of(formattedDate, formattedTime);
+        Table reservationTable = MacDonalds.findReservationTable(contact, formattedDateTime);
+        if(reservationTable == null){
+            System.out.println("No reservation found at this time.");
+            return;
+        }
+
+        Reservation r = reservationTable.checkReservation(contact, formattedDateTime);
+        if(r == null){
+            System.out.println("No reservation found at this time");
+        }else{
+            System.out.println("Details of Reservation");
+            System.out.println("=======================");
+            r.printReservation();
         }
     }
 
