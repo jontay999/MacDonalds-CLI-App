@@ -103,6 +103,10 @@ public class OrderSelection {
         Table table = getTableSelection();
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
+        if(order==null){
+            System.out.println("\nNo order created yet!");
+            return;
+        }
         order.viewOrder();
     }
 
@@ -110,6 +114,10 @@ public class OrderSelection {
         Table table = getTableSelection();
         Customer customer = table.getOccupyingCustomer();
         Order order = customer.getOrder();
+        if(order==null){
+            System.out.println("\nNo order created yet!");
+            return;
+        }
         order.printOrderInvoice();
         table.setOccupyingCustomer(null);
     }
