@@ -1,6 +1,7 @@
 package MacDonalds.New;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  Represents a Reservation
@@ -63,6 +64,7 @@ public class Reservation implements Comparable<Object>{
      * Prints the Reservation Details
      * */
     public void printReservation(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         System.out.print("Reservation Date Time: " + getReservationDateTime().toString() + " | Customer Name: " + customer.getName() + " | Customer Contact Number: " + customer.getContact() + " | Pax: " + numberOfPax + "\n");
     }
 

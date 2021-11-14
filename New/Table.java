@@ -124,22 +124,30 @@ public class Table implements ManageReservation {
      * Return False if is currently occupied or reserved
      * */
     public boolean isAvailable(){
-        if(occupyingCustomer == null){
-            LocalDateTime currReservationTime = LocalDateTime.now();
-            currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
-            currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
-
-            for(Reservation r: reservations){
-                if(r.getReservationDateTime() == currReservationTime){
-                    //not occupied but reserved
-                    return false;
-                }
-            }
-            //not occupied and not reserved
+        clearOldReservations();
+        if(occupyingCustomer == null && reservations.size() == 0){
             return true;
+        }else{
+            return false;
         }
-        //is occupied
-        return false;
+
+
+//        if(occupyingCustomer == null){
+//            LocalDateTime currReservationTime = LocalDateTime.now();
+//            currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
+//            currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
+//
+//            for(Reservation r: reservations){
+//                if(r.getReservationDateTime() == currReservationTime){
+//                    //not occupied but reserved
+//                    return false;
+//                }
+//            }
+//            //not occupied and not reserved
+//            return true;
+//        }
+//        //is occupied
+//        return false;
     }
 
     /**

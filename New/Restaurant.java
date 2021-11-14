@@ -212,6 +212,7 @@ public class Restaurant implements ManageRevenueReport{
             }
         }
         Collections.sort(allReservations);
+        Collections.reverse(allReservations);
         return allReservations;
     }
 
@@ -258,18 +259,18 @@ public class Restaurant implements ManageRevenueReport{
      * @param numPax Number of Persons for the Reservation
      * */
     public Map<LocalTime, ArrayList<Table>> getAvailableTimings(LocalDate date, int numPax){
-        Map<LocalTime, ArrayList<Table>> availableTimes = getPossibleTimings(numPax);
-        for(int i = 0;i<allTables.size();i++){
-            Table currTable = allTables.get(i);
-            ArrayList<Reservation> tableReservations = currTable.getReservations();
-            for(int j = 0;j<tableReservations.size();j++){
-                LocalDateTime reservationTime = tableReservations.get(j).getReservationDateTime();
-                if(reservationTime.toLocalDate().isEqual(date)){
-                    LocalTime unavailableTime = reservationTime.toLocalTime();
-                    availableTimes.get(unavailableTime).remove(currTable);
-                }
-            }
-        }
+        Map<LocalTime, ArrayList<Table>> availableTimes = getPossibleTimings(numPax, date);
+//        for(int i = 0;i<allTables.size();i++){
+//            Table currTable = allTables.get(i);
+//            ArrayList<Reservation> tableReservations = currTable.getReservations();
+//            for(int j = 0;j<tableReservations.size();j++){
+//                LocalDateTime reservationTime = tableReservations.get(j).getReservationDateTime();
+//                if(reservationTime.toLocalDate().isAfter(date)){
+//                    LocalTime unavailableTime = reservationTime.toLocalTime();
+//                    availableTimes.get(unavailableTime).remove(currTable);
+//                }
+//            }
+//        }
         //remove timing if no tables available
         availableTimes.entrySet().removeIf(elem->elem.getValue().size() == 0);
         return availableTimes;
@@ -281,16 +282,24 @@ public class Restaurant implements ManageRevenueReport{
      * Tables that do not have sufficient capacity to fit the number of pax will be filtered out
      * @param numPax minimum capacity of Table needed
      * */
-    public Map<LocalTime, ArrayList<Table>> getPossibleTimings(int numPax){
+    public Map<LocalTime, ArrayList<Table>> getPossibleTimings(int numPax, LocalDate date){
         Map<LocalTime, ArrayList<Table>> allTimes = new HashMap<>();
         LocalTime currTime = openingTime;
         while(currTime.isBefore(closingTime)){
             ArrayList<Table> tableList = new ArrayList<>();
             for(int i = 0;i < getAllTables().size();i++){
                 Table currTable = getAllTables().get(i);
-
                 if(currTable.getCapacity() >= numPax){
-                    tableList.add(currTable);
+                    ArrayList<Reservation> r = currTable.getReservations();
+                    if(r.size() == 0){
+                        tableList.add(currTable);
+                    }else{
+                        Collections.sort(r);
+                        if(r.get(0).getReservationDateTime().isBefore(LocalDateTime.of(date, currTime))){
+                            tableList.add(currTable);
+                        }
+                    }
+
                 }
             }
             allTimes.put(currTime, tableList);
