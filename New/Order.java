@@ -137,7 +137,12 @@ public class Order implements OrderManager, ItemManager {
         System.out.println("Order placed at: "+this.getDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:MM:SS")));
         this.viewOrder();
         System.out.printf("\nTotal price: S$%.2f",this.totalPrice);
-        float discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
+        float discountApplied;
+        if(this.customer.getMembership()!=null){
+            discountApplied = (float)(this.totalPrice*this.customer.getMembership().getDiscount());
+        } else{
+            discountApplied=0;
+        }
         System.out.printf("\nMembership discount: (S$%.2f)",discountApplied);
         System.out.printf("\nGST Applied(inclusive): (S$%.2f)",(0.07*(this.totalPrice-discountApplied)));
         System.out.printf("\nFinal Price to Pay: S$%.2f\n",(this.totalPrice-discountApplied));

@@ -121,6 +121,10 @@ public class MenuSelection {
     }
 
     public void editItem(Menu menu,Alacarte item){
+        if(item==null){
+            System.out.println("There are no items to edit!");
+            return;
+        }
         String [] options = {"Name","Price","Remove Item"};
         int selection = HelperFunctions.getUserInput("FIELD TO EDIT", options);
         if(selection==1){
@@ -137,6 +141,10 @@ public class MenuSelection {
     }
 
     public void editItem(Menu menu,Set item){
+        if(item==null){
+            System.out.println("There are no items to edit!");
+            return;
+        }
         String [] options = {"Name","Remove Item"};
         int selection = HelperFunctions.getUserInput("FIELD TO EDIT", options);
         if(selection==1){

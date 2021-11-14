@@ -44,8 +44,22 @@ public class OrderSelection {
         String [] options = {"Alacarte","Set","Done"};
         while(true){
             int selection = HelperFunctions.getUserInput("SELECT ITEM TYPE", options);
-            if(selection==1)order.addItem(getAlacarteItemInput(menu));
-            else if(selection==2)order.addItem(getSetItemInput(menu));
+            if(selection==1){
+                Alacarte temp = getAlacarteItemInput(menu);
+                if(temp==null){
+                    System.out.println("There are no items to display!");
+                    continue;
+                }
+                order.addItem(temp);
+            }
+            else if(selection==2){
+                Set temp2 = getSetItemInput(menu);
+                if(temp2==null){
+                    System.out.println("There are no items to display!");
+                    continue;
+                }
+                order.addItem(temp2);
+            }
             else  if(selection==3) break;
         }
     }
@@ -127,6 +141,7 @@ public class OrderSelection {
 
     public static Alacarte getAlacarteItemInput(Menu menu){
         ArrayList<Alacarte> items = menu.getAlacarteList();
+        if(items.size()==0)return null;
         String [] options = new String[items.size()];
         int i=0;
         for(Alacarte item:items){
@@ -139,6 +154,7 @@ public class OrderSelection {
 
     public static Set getSetItemInput(Menu menu){
         ArrayList<Set> items = menu.getSetList();
+        if(items.size()==0)return null;
         String [] options = new String[items.size()];
         int i=0;
         for(Set item:items){
