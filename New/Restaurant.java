@@ -260,17 +260,17 @@ public class Restaurant implements ManageRevenueReport{
      * */
     public Map<LocalTime, ArrayList<Table>> getAvailableTimings(LocalDate date, int numPax){
         Map<LocalTime, ArrayList<Table>> availableTimes = getPossibleTimings(numPax, date);
-//        for(int i = 0;i<allTables.size();i++){
-//            Table currTable = allTables.get(i);
-//            ArrayList<Reservation> tableReservations = currTable.getReservations();
-//            for(int j = 0;j<tableReservations.size();j++){
-//                LocalDateTime reservationTime = tableReservations.get(j).getReservationDateTime();
-//                if(reservationTime.toLocalDate().isAfter(date)){
-//                    LocalTime unavailableTime = reservationTime.toLocalTime();
-//                    availableTimes.get(unavailableTime).remove(currTable);
-//                }
-//            }
-//        }
+        for(int i = 0;i<allTables.size();i++){
+            Table currTable = allTables.get(i);
+            ArrayList<Reservation> tableReservations = currTable.getReservations();
+            for(int j = 0;j<tableReservations.size();j++){
+                LocalDateTime reservationTime = tableReservations.get(j).getReservationDateTime();
+                if(!reservationTime.toLocalDate().isBefore(date)){
+                    LocalTime unavailableTime = reservationTime.toLocalTime();
+                    availableTimes.get(unavailableTime).remove(currTable);
+                }
+            }
+        }
         //remove timing if no tables available
         availableTimes.entrySet().removeIf(elem->elem.getValue().size() == 0);
         return availableTimes;
@@ -290,16 +290,16 @@ public class Restaurant implements ManageRevenueReport{
             for(int i = 0;i < getAllTables().size();i++){
                 Table currTable = getAllTables().get(i);
                 if(currTable.getCapacity() >= numPax){
-                    ArrayList<Reservation> r = currTable.getReservations();
-                    if(r.size() == 0){
-                        tableList.add(currTable);
-                    }else{
-                        Collections.sort(r);
-                        if(r.get(0).getReservationDateTime().isBefore(LocalDateTime.of(date, currTime))){
-                            tableList.add(currTable);
-                        }
-                    }
-
+                    tableList.add(currTable);
+//                    ArrayList<Reservation> r = currTable.getReservations();
+//                    if(r.size() == 0){
+//                        tableList.add(currTable);
+//                    }else{
+//                        Collections.sort(r);
+//                        if(r.get(0).getReservationDateTime().isBefore(LocalDateTime.of(date, currTime))){
+//                            tableList.add(currTable);
+//                        }
+//                    }
                 }
             }
             allTimes.put(currTime, tableList);

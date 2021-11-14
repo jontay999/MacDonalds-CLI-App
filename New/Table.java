@@ -125,29 +125,29 @@ public class Table implements ManageReservation {
      * */
     public boolean isAvailable(){
         clearOldReservations();
-        if(occupyingCustomer == null && reservations.size() == 0){
-            return true;
-        }else{
-            return false;
-        }
-
-
-//        if(occupyingCustomer == null){
-//            LocalDateTime currReservationTime = LocalDateTime.now();
-//            currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
-//            currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
-//
-//            for(Reservation r: reservations){
-//                if(r.getReservationDateTime() == currReservationTime){
-//                    //not occupied but reserved
-//                    return false;
-//                }
-//            }
-//            //not occupied and not reserved
+//        if(occupyingCustomer == null && reservations.size() == 0){
 //            return true;
+//        }else{
+//            return false;
 //        }
-//        //is occupied
-//        return false;
+        if(occupyingCustomer == null){
+            LocalDateTime currReservationTime = LocalDateTime.now();
+            currReservationTime = currReservationTime.minusMinutes(currReservationTime.getMinute());
+            currReservationTime = currReservationTime.minusSeconds(currReservationTime.getSecond());
+            currReservationTime = currReservationTime.withNano(0);
+
+            for(Reservation r: reservations){
+//                System.out.println("reservation time: "+ r.getReservationDateTime() + " currtime: " + currReservationTime);
+                if(r.getReservationDateTime().isEqual(currReservationTime)){
+                    //not occupied but reserved
+                    return false;
+                }
+            }
+            //not occupied and not reserved
+            return true;
+        }
+        //is occupied
+        return false;
     }
 
     /**
