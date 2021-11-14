@@ -154,7 +154,7 @@ public class Menu implements MenuControl {
         for(int i=0;i<8;i++)System.out.print("-");
         System.out.println("");
         printMenu(Category.DESSERT);
-        System.out.println("\nPromotional Sets:");
+        System.out.println("\nSets:");
         for(int i=0;i<getMaxAlacarteLength()*2+30;i++)System.out.print("-");
         System.out.println("");
         for(Set item:setList){
