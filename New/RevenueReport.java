@@ -81,7 +81,7 @@ public abstract class RevenueReport {
      * Prints the menu item as a line in the revenue report
      * */
     void printMenuItem(MenuItem item, int numberSold){
-        System.out.println(item.getName() + " | " + numberSold + " | " + item.getPrice()*numberSold);
+        System.out.println(item.getName() + " | " + numberSold + " | " + String.format("%.2f",item.getPrice()*numberSold) );
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class RevenueReport {
         }
         System.out.println("----------------");
         System.out.println("Total Sales Volume: " + getSalesVolume());
-        System.out.println("Total Revenue: " + getRevenue());
+        System.out.println("Total Revenue: " + String.format("$%.2f",getRevenue()));
     }
 
     /**
